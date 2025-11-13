@@ -9,13 +9,13 @@ export default function Navbar() {
                <div className="my-auto flex items-center justify-between">
                   <div className="flex items-center gap-4">
                      <RiBrushAiFill className="text-4xl" />
-                     <Link to={routes.home} className="text-gray-800 text-sm font-semibold hover:text-purple-600">Home</Link>
-                     <Link to={routes.home} className="text-gray-800 text-sm font-semibold hover:text-purple-600">Opere</Link>
-                     <Link to={routes.home} className="text-gray-800 text-sm font-semibold hover:text-purple-600">Installazioni</Link>
+                     <Link to={routes.home} className="text-sm font-semibold hover:text-accent-content transition-colors duration-100">Home</Link>
+                     <Link to={routes.home} className="text-sm font-semibold hover:text-accent-content transition-colors duration-100">Opere</Link>
+                     <Link to={routes.home} className="text-sm font-semibold hover:text-accent-content transition-colors duration-100">Installazioni</Link>
                   </div>
 
                   <div className="flex items-center">
-                     <Link to={routes.home} className="text-gray-800 text-sm font-semibold hover:text-purple-600">Contatti</Link>
+                     <Link to={routes.home} className="text-sm font-semibold hover:text-accent-content transition-colors duration-100">Contatti</Link>
                   </div>
                </div>
             </div>
