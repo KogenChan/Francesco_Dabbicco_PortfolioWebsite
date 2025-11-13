@@ -9,13 +9,13 @@ export default function Home() {
          <main className="h-screen bg-primary container mx-auto flex flex-col lg:grid lg:grid-cols-2 items-stretch lg:py-16">
             <figure className="lg:order-2 flex justify-center lg:justify-end overflow-hidden grow lg:h-auto">
                <img
-                  src="https://picsum.photos/id/12/650/800"
+                  src="../../public/media/cover.webp"
                   alt="Francesco Dabbicco"
                   className="h-full object-cover lg:w-auto lg:h-auto lg:object-contain pt-16"
                />
             </figure>
 
-            <div className="lg:order-1 flex flex-col justify-end lg:justify-center px-0 pt-6 lg:pt-0 pb-10 lg:pb-8">
+            <div className="lg:order-1 flex flex-col justify-end lg:justify-center px-0 pt-6 lg:pt-0 pb-10 lg:pb-6">
                <h1 className="text-4xl pb-5 lg:pb-6">Francesco Dabbicco</h1>
                <p className="text-base lg:text-lg">
                   Lorem ipsum dolor sit amet consectetur, adipisicing elit. Asperiores

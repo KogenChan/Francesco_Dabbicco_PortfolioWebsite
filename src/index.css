@@ -68,6 +68,29 @@ html {
    }
 }
 
+@font-face {
+   font-family: 'Quarion';
+   font-display: swap;
+   src: url(../public/fonts/Quarion-Book.ttf) format('truetype');
+}
+
+@font-face {
+   font-family: 'QuarionItalic';
+   font-display: swap;
+   src: url(../public/fonts/Quarion-BookItalic.ttf) format('truetype');
+}
+
+@layer base {
+   body {
+      font-family: 'Quarion', sans-serif;
+      font-display: swap;
+   }
+
+   img {
+      content-visibility: auto;
+   }
+}
+
 .container {
    max-width: 80rem;
    padding-left: 16px;
