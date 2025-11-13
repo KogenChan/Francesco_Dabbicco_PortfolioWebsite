@@ -15,9 +15,9 @@
    name: "light";
    default: true;
    --color-primary: #fff;
-   --color-secondary: #f9e4c5;
-   --color-accent: #849dc3;
-   --color-accent-content: #436dac;
+   --color-secondary: #f5edd2;
+   --color-accent: #8b9fdd;
+   --color-accent-content: #6a7aaa;
    --color-neutral: #1f2937;
    --color-base-100: #fff;
    --color-base-200: #fff;
@@ -27,6 +27,7 @@
 
 :root {
    --font-multiplier: 1;
+   --color-secondary: #f7efd4;
 }
 
 html {

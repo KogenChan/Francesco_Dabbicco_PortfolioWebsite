@@ -8,7 +8,7 @@ export default function Navbar() {
             <div className="container mx-auto h-16 content-center">
                <div className="my-auto flex items-center justify-between">
                   <div className="flex items-center gap-4">
-                     <RiBrushAiFill className="text-4xl" />
+                     <img src="../../public/media/logo.webp" alt="Francesco Dabbicco Logo" width={40} height={40} />
                      <Link to={routes.home} className="text-sm font-semibold hover:text-accent-content transition-colors duration-100">Home</Link>
                      <Link to={routes.home} className="text-sm font-semibold hover:text-accent-content transition-colors duration-100">Opere</Link>
                      <Link to={routes.home} className="text-sm font-semibold hover:text-accent-content transition-colors duration-100">Installazioni</Link>
