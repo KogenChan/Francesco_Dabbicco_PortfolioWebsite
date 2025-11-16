@@ -97,14 +97,65 @@ html {
    padding-right: 16px;
 }
 
-@media (width <= 40rem) {
-   .container {
-      padding: 0px 16px;
+* {
+   scrollbar-width: thin;
+   scrollbar-color: #8b9fdd #fff;
+}
+
+.btn-top {
+   border-radius: 50px;
+   border: 3px solid #6a7aaa;
+   box-sizing: content-box;
+   padding: 0;
+   display: flex;
+   align-items: center;
+   height: 34px;
+   width: 150px;
+   overflow: hidden;
+   clip-path: inset(0 0 0 calc(100% - 40px) round 50px);
+   transition: clip-path 0.3s ease-in-out, opacity 0.2s ease;
+}
+
+.btn-top svg {
+   position: absolute;
+   z-index: 40;
+   right: 0px;
+   flex-shrink: 0;
+   transition: right 0.3s ease-in-out, background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+}
+
+.btn-top span {
+   opacity: 0;
+   z-index: 10;
+   white-space: nowrap;
+   transition: opacity 0.1s ease-in-out 0.1s;
+}
+
+@media (width < 80rem) {
+   .btn-top:active svg {
+      background-color: #f1ac6a;
+      color: #6a7aaa;
    }
 }
 
-@media (width >= 68rem) {
+@media (width >=68rem) {
    :root {
       --font-multiplier: 1.1;
+   }
+
+   .btn-top:hover {
+      cursor: pointer;
+      clip-path: inset(0 0 0 0 round 50px);
+   }
+
+   .btn-top:hover svg {
+      right: calc(100% - 34px);
+      background-color: #f1ac6a;
+      color: #6a7aaa;
+   }
+
+   .btn-top:hover span {
+      opacity: 1;
+      transition: opacity 0.1s ease-in-out 0.1s;
    }
 }

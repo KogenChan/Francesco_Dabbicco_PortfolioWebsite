@@ -10,7 +10,7 @@ export default function Footer() {
             to={routes.home}
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
          >
-            John Doe
+            Francesco Dabbicco
          </Link>
       </div>
    );

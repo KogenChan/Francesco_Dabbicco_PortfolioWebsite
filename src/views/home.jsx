@@ -1,5 +1,5 @@
 import Carousel from "../components/Carousel";
-import useFetchData from "../hooks/useFetchData";
+import useFetchData from "../hooks/useFetchData.min.js";
 
 export default function Home() {
    const { data, loading, error } = useFetchData('/images.min.json');
@@ -26,15 +26,20 @@ export default function Home() {
             </div>
          </main>
 
-         <section className="container mx-auto py-12 overflow-x-hidden">
+         {/* ! Opere recenti */}
+
+         <section className="container mx-auto pb-16 lg:pb-20 overflow-x-hidden">
+            <h2 className="text-3xl pb-6 pt-12">Latest Works</h2>
             {loading && <p className="text-center text-gray-500">Loading images...</p>}
             {error && <p className="text-center text-red-500">Error: {error}</p>}
             {!loading && !error && data.length > 0 && <Carousel items={data} />}
          </section>
 
+         {/* ! In evidenza */}
+
          <section className="bg-secondary">
-            <div className="h-screen bg-none container mx-auto flex flex-col lg:grid lg:grid-cols-2 items-stretch lg:py-16">
-               <h1 className="text-4xl pb-6 pt-12 lg:hidden">Nome Progetto</h1>
+            <div className="min-h-screen bg-none container mx-auto flex flex-col lg:grid lg:grid-cols-2 items-stretch lg:py-16">
+               <h2 className="text-4xl pb-6 pt-12 lg:hidden">Nome Progetto</h2>
                <figure className="flex justify-start overflow-hidden grow lg:h-auto">
                   <img
                      src="https://picsum.photos/id/12/650/800"
@@ -43,7 +48,7 @@ export default function Home() {
                   />
                </figure>
 
-               <div className="flex flex-col justify-end lg:justify-center px-0 pt-6 lg:pt-0 pb-10 lg:pb-8 lg:ps-4 2xl:ps-0">
+               <div className="flex flex-col justify-end lg:justify-center px-0 pt-6 lg:pt-0 pb-10 lg:pb-8 lg:ps-4">
                   <h1 className="text-4xl pb-6 hidden lg:block">Nome Progetto</h1>
                   <p className="text-base lg:text-lg">
                      Lorem ipsum dolor sit amet consectetur, adipisicing elit. Asperiores

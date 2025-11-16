@@ -1,6 +1,6 @@
 import { useRef, useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 import CarouselButton from "./CarouselButton";
+import useImageZoom from "../hooks/useImageZoom";
 
 export default function Carousel({ items }) {
    const scrollRef = useRef(null);
@@ -9,7 +9,7 @@ export default function Carousel({ items }) {
    const [currentIndex, setCurrentIndex] = useState(0);
    const [itemsPerView, setItemsPerView] = useState(1);
    const [isAnimating, setIsAnimating] = useState(false);
-   const [zoomState, setZoomState] = useState(null);
+   const { handleImageClick, ZoomModal } = useImageZoom();
 
    const minSwipeDistance = 50;
 
@@ -86,18 +86,6 @@ export default function Carousel({ items }) {
    const stretchDistance = Math.abs(nextDotPosition - dotPosition);
    const stretchWidth = dotSize + stretchDistance;
 
-   const handleImageClick = (e, image) => {
-      const rect = e.target.getBoundingClientRect();
-      
-      setZoomState({
-         image,
-         top: rect.top,
-         left: rect.left,
-         width: rect.width,
-         height: rect.height,
-      });
-   };
-
    return (
       <div className="relative">
          <div className="hidden md:block">
@@ -129,7 +117,7 @@ export default function Carousel({ items }) {
                   <img
                      src={item.image}
                      alt={`Image ${item.id}`}
-                     onClick={(e) => handleImageClick(e, item.image)}
+                     onClick={handleImageClick}
                      className="w-full aspect-square object-cover cursor-pointer hover:opacity-80 transition"
                   />
                </div>
@@ -139,7 +127,7 @@ export default function Carousel({ items }) {
          <div className="flex justify-center items-center mt-[18px] h-[16px]">
             <div className="relative rounded-full border-2 border-gray-300 h-[16px] w-[120px]">
                <div
-                  className="absolute top-1/2 -translate-y-1/2 h-[8px] bg-blue-500 rounded-full transition-all duration-200 ease-in-out"
+                  className="absolute top-1/2 -translate-y-1/2 h-[8px] bg-accent rounded-full transition-all duration-200 ease-in-out"
                   style={{
                      left:
                         isAnimating === -1
@@ -151,57 +139,7 @@ export default function Carousel({ items }) {
             </div>
          </div>
 
-         <AnimatePresence>
-            {zoomState && (
-               <>
-                  {/* Overlay */}
-                  <motion.div
-                     className="fixed inset-0 bg-primary/80 z-40 cursor-pointer"
-                     onClick={() => setZoomState(null)}
-                     initial={{ opacity: 0 }}
-                     animate={{ opacity: 1 }}
-                     exit={{ opacity: 0 }}
-                     transition={{ duration: 0.3 }}
-                  />
-
-                  {/* Animated full-size image */}
-                  <motion.div
-                     key={zoomState.image}
-                     className="fixed z-50 cursor-pointer flex items-center justify-center"
-                     initial={{
-                        top: `${zoomState.top + zoomState.height / 2}px`,
-                        left: `${zoomState.left + zoomState.width / 2}px`,
-                        width: `${zoomState.width}px`,
-                        height: `${zoomState.height}px`,
-                        x: '-50%',
-                        y: '-50%',
-                     }}
-                     animate={{
-                        top: '50%',
-                        left: '50%',
-                        width: '90vw',
-                        height: '90vh',
-                        x: '-50%',
-                        y: '-50%',
-                     }}
-                     exit={{
-                        opacity: 0,
-                     }}
-                     transition={{
-                        duration: 0.5,
-                        ease: [0.25, 0.1, 0.25, 1],
-                     }}
-                     onClick={() => setZoomState(null)}
-                  >
-                     <img
-                        src={zoomState.image}
-                        alt="Full preview"
-                        className="max-w-full max-h-full object-contain"
-                     />
-                  </motion.div>
-               </>
-            )}
-         </AnimatePresence>
+         <ZoomModal />
       </div>
    );
 };
