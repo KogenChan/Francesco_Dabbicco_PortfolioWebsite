@@ -89,6 +89,11 @@ html {
    img {
       content-visibility: auto;
    }
+
+   .italic {
+      font-family: 'QuarionItalic', sans-serif;
+      font-display: swap;
+   }
 }
 
 .container {
@@ -104,15 +109,14 @@ html {
 
 .btn-top {
    border-radius: 50px;
-   border: 3px solid #6a7aaa;
    box-sizing: content-box;
    padding: 0;
    display: flex;
    align-items: center;
-   height: 34px;
-   width: 150px;
+   height: 40px;
+   width: 160px;
    overflow: hidden;
-   clip-path: inset(0 0 0 calc(100% - 40px) round 50px);
+   clip-path: inset(0 0 0 calc(100% - 39px) round 50px);
    transition: clip-path 0.3s ease-in-out, opacity 0.2s ease;
 }
 
@@ -122,6 +126,7 @@ html {
    right: 0px;
    flex-shrink: 0;
    transition: right 0.3s ease-in-out, background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+   outline: 1px solid #8b9fdd;
 }
 
 .btn-top span {
@@ -129,6 +134,19 @@ html {
    z-index: 10;
    white-space: nowrap;
    transition: opacity 0.1s ease-in-out 0.1s;
+}
+
+.react-photo-album--image {
+   cursor: pointer;
+   transition: opacity 150ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.react-photo-album--image:hover {
+   opacity: 0.8;
+}
+
+.detailImg {
+   max-height: calc(100vh - 148px);
 }
 
 @media (width < 80rem) {
@@ -149,13 +167,18 @@ html {
    }
 
    .btn-top:hover svg {
-      right: calc(100% - 34px);
+      right: calc(100% - 40px);
       background-color: #f1ac6a;
       color: #6a7aaa;
+      outline: 1px solid #f1ac6a;
    }
 
    .btn-top:hover span {
       opacity: 1;
       transition: opacity 0.1s ease-in-out 0.1s;
+   }
+
+   .detailImg {
+      max-height: calc(100vh - 172px);
    }
 }

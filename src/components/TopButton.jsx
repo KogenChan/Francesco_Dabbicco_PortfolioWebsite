@@ -30,8 +30,8 @@ export default function BackToTopButton() {
          onClick={scrollToTop}
          className={`btn-top fixed bottom-8 right-6 z-50 bg-accent-content ${isVisible ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
       >
-         <BiChevronUp className='text-white text-[34px] bg-accent rounded-full' />
-         <span className='text-md font-normal text-white ps-[42px]'>Back to top</span>
+         <BiChevronUp className='text-white text-[40px] bg-accent rounded-full' />
+         <span className='text-sm font-normal text-white ps-[50px]'>Back to top</span>
       </button>
    );
 };

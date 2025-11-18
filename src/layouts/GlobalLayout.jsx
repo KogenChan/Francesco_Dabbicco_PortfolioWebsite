@@ -6,7 +6,7 @@ import BackToTopButton from "../components/TopButton";
 export default function Layout() {
    return (
       <div className="bg-base-300 min-h-screen flex flex-col justify-between">
-         <div className="min-h-screen">
+         <div>
             <Navbar />
             <div>
                { }

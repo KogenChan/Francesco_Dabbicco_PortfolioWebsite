@@ -2,7 +2,10 @@ import { createBrowserRouter } from "react-router";
 import Layout from "../layouts/GlobalLayout";
 import Home from "../views/home";
 import routes from "./routes.min";
-
+import Works from "../views/works";
+import Installations from "../views/installations";
+import WorkDetail from "../views/workDetail";
+import InstallationDetail from "../views/installationDetail";
 const router = createBrowserRouter([
    {
       path: routes.home,
@@ -11,6 +14,22 @@ const router = createBrowserRouter([
          {
             index: true,
             Component: Home
+         },
+         {
+            path: routes.works,
+            Component: Works
+         },
+         {
+            path: routes.installations,
+            Component: Installations
+         },
+         {
+            path: routes.workDetail,
+            Component: WorkDetail
+         },
+         {
+            path: routes.installationDetail,
+            Component: InstallationDetail
          }
       ]
    }
