@@ -1,23 +1,9 @@
-import { useNavigate } from 'react-router';
-import PhotoAlbum from "react-photo-album";
-import "react-photo-album/styles.css";
-import usePhotos from '../hooks/usePhotos';
+import usePhotos from '../hooks/usePhotos.min.js';
+import Gallery from '../components/Gallery.jsx';
+import ProjectSection from '../components/ProjectSection.jsx';
 
 export default function Installations() {
-   const { photos, loading, error } = usePhotos('/images.min.json');
-   const navigate = useNavigate();
-
-   const handlePhotoClick = (photo) => {
-      navigate(`/opere/${photo.key}`);
-   };
-
-   if (loading) {
-      return (
-         <div className="flex justify-center my-20">
-            <div>Loading...</div>
-         </div>
-      );
-   }
+   const { photos, error } = usePhotos('/images.min.json');
 
    if (error) {
       return (
@@ -28,29 +14,24 @@ export default function Installations() {
    }
 
    return (
-      <div className="flex justify-center">
-         <style>{`
-            .react-photo-album--image {
-               cursor: pointer !important;
-               transition: opacity 300ms ease-in-out !important;
-            }
-            .react-photo-album--image:hover {
-               opacity: 0.8 !important;
-            }
-         `}</style>
-         <main className="container w-full mt-16 mb-2 pt-4">
-            {photos.length > 0 && (
-               <PhotoAlbum 
-                  layout="rows"
-                  photos={photos}
-                  spacing={16}
-                  padding={0}
-                  targetRowHeight={300}
-                  breakpoints={[300, 600, 1100]}
-                  onClick={({ photo }) => handlePhotoClick(photo)}
-               />
-            )}
+      <>
+         <main>
+            <Gallery content={photos} className={'lg:mt-22 lg:mb-18'} />
          </main>
-      </div>
+         <ProjectSection
+            title="Nome Progetto"
+            description={[
+               "Lorem ipsum dolor sit amet consectetur, adipisicing elit.",
+               "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Laudantium minima totam, fugiat modi perspiciatis suscipit dolores autem dolorum ipsam nam rem, porro odio laborum adipisci esse atque, mollitia earum ut? Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam repellendus nemo provident, possimus natus accusamus numquam debitis officia ad rerum similique voluptatem ipsa, porro sit maiores expedita! Cumque, enim accusamus?",
+               "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Itaque dolorum in qui ipsum incidunt quam ratione, id eligendi? Quo consequatur voluptas cumque ullam, tenetur maiores esse omnis similique laborum itaque."
+            ]}
+            imageSrc="https://picsum.photos/id/12/650/800"
+            imageAlt="Francesco Dabbicco"
+            reverse={true}
+            galleryPhotos={photos}
+            className='lg:pb-0'
+            galleryClassName='lg:mt-12'
+         />
+      </>
    );
 };

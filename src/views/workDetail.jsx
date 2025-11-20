@@ -1,10 +1,10 @@
 import { useParams } from 'react-router';
 import { useRef, useState, useEffect } from 'react';
-import usePhotos from '../hooks/usePhotos';
+import usePhotos from '../hooks/usePhotos.min.js';
 
 export default function WorkDetail() {
    const { itemName } = useParams();
-   const { photos, loading, error } = usePhotos('/images.min.json');
+   const { photos, loading, error } = usePhotos('/images.min.json', { waitForRender: false });
    const imgRef = useRef(null);
    const [imgWidth, setImgWidth] = useState(0);
 
@@ -18,6 +18,7 @@ export default function WorkDetail() {
 
    useEffect(() => {
       if (!loading && photo) {
+         updateWidth();
          window.addEventListener('resize', updateWidth);
 
          return () => {

@@ -1,5 +1,5 @@
 import { useParams } from 'react-router';
-import usePhotos from '../hooks/usePhotos';
+import usePhotos from '../hooks/usePhotos.min.js';
 
 export default function InstallationDetail() {
    const { itemName } = useParams();

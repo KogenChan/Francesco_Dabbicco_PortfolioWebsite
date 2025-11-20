@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { createPortal } from "react-dom";
 
 export default function useImageZoom() {
    const [zoomState, setZoomState] = useState(null);
@@ -20,6 +21,8 @@ export default function useImageZoom() {
    const closeZoom = () => setZoomState(null);
 
    const ZoomModal = () => (
+      createPortal(
+
       <AnimatePresence>
          {zoomState && (
             <>
@@ -70,7 +73,9 @@ export default function useImageZoom() {
                </motion.div>
             </>
          )}
-      </AnimatePresence>
+      </AnimatePresence>,
+      document.body
+      )
    );
 
    return { handleImageClick, ZoomModal };

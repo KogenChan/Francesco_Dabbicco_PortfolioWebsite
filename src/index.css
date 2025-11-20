@@ -86,10 +86,6 @@ html {
       font-display: swap;
    }
 
-   img {
-      content-visibility: auto;
-   }
-
    .italic {
       font-family: 'QuarionItalic', sans-serif;
       font-display: swap;
@@ -180,5 +176,35 @@ html {
 
    .detailImg {
       max-height: calc(100vh - 172px);
+   }
+}
+
+/* # loader */
+
+.loader {
+   width: 40px;
+   aspect-ratio: .577;
+   clip-path: polygon(0 0, 100% 100%, 0 100%, 100% 0);
+   position: relative;
+   animation: rotate 2s infinite linear;
+   overflow: hidden;
+}
+
+.loader-mask {
+   clip-path: circle(50% at 50% 50%);
+}
+
+.loader:before {
+   content: "";
+   position: absolute;
+   inset: -150% -150%;
+   background: repeating-conic-gradient(from 30deg, #6a7aaa 0 60deg, #8b9fdd 0 120deg, #f1ac6a 0 180deg);
+   animation: rotate 3s infinite linear;
+   animation-direction: reverse;
+}
+
+@keyframes rotate {
+   100% {
+      transform: rotate(360deg)
    }
 }
