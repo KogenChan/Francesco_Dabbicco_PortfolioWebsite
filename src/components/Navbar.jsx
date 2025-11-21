@@ -14,7 +14,7 @@ export default function Navbar() {
                   </div>
 
                   <div className="flex items-center">
-                     <Link to={routes.home} className="text-sm font-semibold hover:text-accent-content transition-colors duration-100">Contatti</Link>
+                     <Link to={routes.contact} className="text-sm font-semibold hover:text-accent-content transition-colors duration-100">Contatti</Link>
                   </div>
                </div>
             </div>

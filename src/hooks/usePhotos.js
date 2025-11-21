@@ -24,6 +24,16 @@ const loadPhotosWithDimensions = async (items) =>
       )
    );
 
+const isInViewport = (el) => {
+   const rect = el.getBoundingClientRect();
+   return (
+      rect.top < window.innerHeight &&
+      rect.bottom > 0 &&
+      rect.left < window.innerWidth &&
+      rect.right > 0
+   );
+};
+
 export default function usePhotos(url, options = {}) {
    const {
       waitForRender = true,
@@ -31,7 +41,6 @@ export default function usePhotos(url, options = {}) {
    } = options;
 
    const { startLoading, stopLoading } = useGlobalLoading();
-   // Tell useFetchData NOT to manage loading - we handle it here
    const { data, loading: fetchLoading, error: fetchError } = useFetchData(url, { manageLoading: false });
 
    const [photos, setPhotos] = useState([]);
@@ -39,12 +48,10 @@ export default function usePhotos(url, options = {}) {
    const [imagesRendered, setImagesRendered] = useState(false);
    const [error, setError] = useState(null);
 
-   // Start loading once on mount
    useEffect(() => {
       startLoading();
    }, [startLoading]);
 
-   // Process images after fetch completes
    useEffect(() => {
       if (fetchError) {
          setError(fetchError);
@@ -68,35 +75,51 @@ export default function usePhotos(url, options = {}) {
          })
          .finally(() => {
             if (active) setProcessingImages(false);
-            // If not waiting for render, stop loading now
             if (!waitForRender) stopLoading();
          });
 
       return () => { active = false; };
    }, [data, fetchError, fetchLoading, waitForRender, stopLoading]);
 
-   // Wait for images to actually render in the DOM
    useEffect(() => {
       if (!waitForRender) return;
       if (processingImages || fetchLoading || photos.length === 0) return;
       if (imagesRendered) return;
 
-      const checkImages = () => {
-         const imgElements = document.querySelectorAll(imageSelector);
-         
-         if (imgElements.length === 0) {
-            setTimeout(checkImages, 50);
+      let attempts = 0;
+      const maxAttempts = 10; // 50ms * 10 = 500ms max wait for DOM
+
+      const checkVisibleImages = () => {
+         const allImages = document.querySelectorAll(imageSelector);
+
+         if (allImages.length === 0) {
+            attempts++;
+            if (attempts < maxAttempts) {
+               setTimeout(checkVisibleImages, 50);
+            } else {
+               // No gallery rendered at all, stop loading
+               setImagesRendered(true);
+               stopLoading();
+            }
             return;
          }
 
-         const images = Array.from(imgElements);
-         
-         if (images.every((img) => img.complete)) {
+         // Only care about images currently in viewport
+         const visibleImages = Array.from(allImages).filter(isInViewport);
+
+         if (visibleImages.length === 0) {
+            // Gallery exists but not in viewport, stop loading
+            setImagesRendered(true);
+            stopLoading();
+            return;
+         }
+
+         if (visibleImages.every((img) => img.complete)) {
             setImagesRendered(true);
             stopLoading();
          } else {
             Promise.all(
-               images.map((img) =>
+               visibleImages.map((img) =>
                   img.complete
                      ? Promise.resolve()
                      : new Promise((resolve) => {
@@ -111,7 +134,7 @@ export default function usePhotos(url, options = {}) {
          }
       };
 
-      checkImages();
+      checkVisibleImages();
    }, [processingImages, fetchLoading, photos, imagesRendered, imageSelector, waitForRender, stopLoading]);
 
    return {
@@ -119,4 +142,4 @@ export default function usePhotos(url, options = {}) {
       loading: fetchLoading || processingImages || (waitForRender && !imagesRendered),
       error,
    };
-}
+};

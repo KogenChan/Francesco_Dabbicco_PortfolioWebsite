@@ -12,7 +12,7 @@ export default function Home() {
                <img
                   src="../../public/media/cover.webp"
                   alt="Francesco Dabbicco"
-                  className="h-full object-cover lg:w-auto lg:h-auto lg:object-contain pt-16 lg:pt-4"
+                  className="w-full object-cover lg:w-auto lg:h-auto lg:object-contain pt-16 lg:pt-4"
                />
             </figure>
 

@@ -15,8 +15,8 @@ export default function Works() {
 
    return (
       <>
-         <main>
-            <Gallery content={photos} className={'lg:mt-22 lg:mb-18'} />
+         <main className='min-h-screen pt-12'>
+            <Gallery content={photos} />
          </main>
          <ProjectSection
             title="Nome Progetto"
@@ -31,6 +31,7 @@ export default function Works() {
             galleryPhotos={photos}
             className='lg:pb-0'
             galleryClassName='lg:mt-12'
+            bg='secondary'
          />
       </>
    );

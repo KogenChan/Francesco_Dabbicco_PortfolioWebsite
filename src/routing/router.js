@@ -6,6 +6,8 @@ import Works from "../views/works";
 import Installations from "../views/installations";
 import WorkDetail from "../views/workDetail";
 import InstallationDetail from "../views/installationDetail";
+import Contacts from "../views/contacts";
+
 const router = createBrowserRouter([
    {
       path: routes.home,
@@ -30,6 +32,10 @@ const router = createBrowserRouter([
          {
             path: routes.installationDetail,
             Component: InstallationDetail
+         },
+         {
+            path: routes.contact,
+            Component: Contacts
          }
       ]
    }

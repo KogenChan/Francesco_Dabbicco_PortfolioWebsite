@@ -8,20 +8,20 @@ export default function ProjectSection({
    reverse = false,
    galleryPhotos = null,
    className = '',
-   galleryClassName = ''
+   galleryClassName = '',
+   bg = ''
 }) {
    return (
       <>
-         <section className="bg-secondary">
+         <section className={`bg-${bg}`}>
             <article className={`min-h-screen bg-none container mx-auto flex flex-col items-stretch lg:py-16 ${reverse ? 'lg:grid lg:grid-cols-2 lg:flex-col-reverse' : 'lg:grid lg:grid-cols-2'
                } ${className}`}>
 
                {/* # Title for mobile */}
-               <h2 className="text-4xl pb-6 pt-12 lg:hidden">{title}</h2>
+               <h2 className="text-4xl pb-6 pt-10 lg:hidden">{title}</h2>
 
                {/* # Image */}
-               <figure className={`flex overflow-hidden grow lg:h-auto ${reverse ? 'justify-end' : 'justify-start'
-                  } ${reverse ? 'lg:ps-4 lg:pe-0 lg:order-2' : 'lg:ps-0 lg:pe-4 lg:order-1'}`}>
+               <figure className={`flex overflow-hidden grow lg:h-auto ${reverse ? 'justify-end lg:ms-4 lg:me-0 lg:order-2' : 'justify-start lg:ms-0 lg:me-4 lg:order-1'}`}>
                   <img
                      src={imageSrc}
                      alt={imageAlt}

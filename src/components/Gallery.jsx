@@ -20,7 +20,7 @@ export default function Gallery({ content, className }) {
                opacity: 0.8 !important;
             }
          `}</style>
-         <div className={`container w-full my-16 ${className}`}>
+         <div className={`container w-full my-5 lg:my-16 ${className}`}>
             {content.length > 0 && (
                <PhotoAlbum 
                   layout="rows"

@@ -3,7 +3,8 @@ const routes = {
    works: '/opere',
    installations: '/installazioni',
    workDetail: '/opere/:itemName',
-   installationDetail: '/installazioni/:itemName'
+   installationDetail: '/installazioni/:itemName',
+   contact: '/contatti'
 }
 
 export default routes
