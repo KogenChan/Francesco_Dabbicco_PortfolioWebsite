@@ -45,7 +45,7 @@ export default function Home() {
             ]}
             imageSrc="https://picsum.photos/id/12/650/800"
             imageAlt="Francesco Dabbicco"
-            className="mb-20"
+            className="lg:mb-20"
          />
       </>
    );
