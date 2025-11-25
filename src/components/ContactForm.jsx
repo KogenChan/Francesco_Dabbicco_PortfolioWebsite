@@ -36,9 +36,10 @@ export default function ContactForm() {
                   Contattami
                </h2>
 
-               <div className="flex items-center">
+               <div className="flex items-end">
+                  <p className='pb-[1px] pe-1'>Email: </p>
                   <button
-                     className="cursor-pointer me-1"
+                     className="cursor-pointer me-1 pb-[1px]"
                      onClick={() => {
                         navigator.clipboard.writeText('lucasimonecomposer@gmail.com');
                         alert('Email copied to clipboard!');
@@ -46,22 +47,23 @@ export default function ContactForm() {
                   >
                      <MdOutlineAlternateEmail className="text-2xl pt-1 text-base-content hover:text-accent transition-colors duration-100" />
                   </button>
+                  <p className="text-2xl font-sans text-accent -mb-[1px] px-1">|</p>
                   <a
-                     className="text-base-content m-0 mx-1.5"
+                     className="text-base-content m-0 mx-1.5 pb-[1px]"
                      target="_blank"
                      href="https://www.instagram.com/francescodabbiccoart/"
                      rel="noopener noreferrer"
                   >
                      <FaInstagram className="text-2xl pt-1 text-base-content hover:text-accent transition-colors duration-100" />
                   </a>
-                  <a
+                  {/* <a
                      className="text-base-content m-0 mx-1.5"
                      target="_blank"
                      href="https://www.linkedin.com/in/luca--simone/"
                      rel="noopener noreferrer"
                   >
                      <FaLinkedin className="text-2xl pt-1 text-base-content hover:text-accent transition-colors duration-100" />
-                  </a>
+                  </a> */}
                </div>
             </div>
             <form onSubmit={onSubmit}>

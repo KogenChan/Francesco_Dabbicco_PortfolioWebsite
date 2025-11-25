@@ -15,7 +15,7 @@ export default function Works() {
 
    return (
       <>
-         <main className='min-h-screen pt-12'>
+         <main className='min-h-screen pt-6'>
             <Gallery content={photos} />
          </main>
          <ProjectSection
@@ -30,7 +30,7 @@ export default function Works() {
             reverse={true}
             galleryPhotos={photos}
             className='lg:pb-0'
-            galleryClassName='lg:mt-12'
+            galleryClassName='lg:mt-4'
             bg='secondary'
          />
       </>

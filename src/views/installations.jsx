@@ -27,7 +27,7 @@ export default function Installations() {
                reverse={true}
                galleryPhotos={photos}
                className='lg:pb-0'
-               galleryClassName='lg:mt-12'
+               galleryClassName='lg:mt-4'
                bg='primary'
             />
             <ProjectSection
@@ -42,7 +42,7 @@ export default function Installations() {
                reverse={false}
                galleryPhotos={photos}
                className='lg:pb-0'
-               galleryClassName='lg:mt-12'
+               galleryClassName='lg:mt-4'
                bg='secondary'
             />
          </main>

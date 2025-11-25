@@ -1,52 +1,79 @@
 import Carousel from "../components/Carousel";
-import ProjectSection from "../components/ProjectSection.jsx"
+import ProjectSection from "../components/ProjectSection.jsx";
 import useFetchData from "../hooks/useFetchData.min.js";
 
 export default function Home() {
-   const { data, loading, error } = useFetchData('/images.min.json');
+   const PAYLOAD_API = import.meta.env.VITE_PAYLOAD_API_URL;
+
+   const { data: heroData, loading: heroLoading, error: heroError } = useFetchData(
+      `${PAYLOAD_API}/homepage-hero?limit=1`
+   );
+
+   const { data: carouselData, loading: carouselLoading, error: carouselError } = useFetchData(
+      `${PAYLOAD_API}/carousel-item?sort=order`
+   );
+
+   const { data: projectData, loading: projectLoading, error: projectError } = useFetchData(
+      `${PAYLOAD_API}/project-section?limit=1`
+   );
+
+   // Safely grab first items
+   const hero = heroData?.docs?.[0];
+   const carouselItems = carouselData?.docs || [];
+   const project = projectData?.docs?.[0];
+
+   const transformedCarouselItems = carouselItems.map(item => ({
+      id: item.id,
+      image: `http://localhost:3000${item.image?.url}`,
+      alt: item.image?.alt || `Carousel image ${item.order}`
+   }));
+
+   // Optional: show loading or errors
+   if (heroLoading || carouselLoading || projectLoading) return <p>Loading...</p>;
+   if (heroError) return <p className="text-red-500">Hero Error: {heroError}</p>;
+   if (carouselError) return <p className="text-red-500">Carousel Error: {carouselError}</p>;
+   if (projectError) return <p className="text-red-500">Project Error: {projectError}</p>;
 
    return (
       <>
-         <main className="h-screen bg-primary container mx-auto flex flex-col lg:grid lg:grid-cols-2 items-stretch lg:py-16">
-            <figure className="lg:order-2 flex justify-center lg:justify-end overflow-hidden grow lg:h-auto">
-               <img
-                  src="../../public/media/cover.webp"
-                  alt="Francesco Dabbicco"
-                  className="w-full object-cover lg:w-auto lg:h-auto lg:object-contain pt-16 lg:pt-4"
-               />
-            </figure>
+         {/* HERO SECTION */}
+         {hero && (
+            <main className="h-screen bg-primary container mx-auto flex flex-col lg:grid lg:grid-cols-2 items-stretch lg:py-16">
+               <figure className="lg:order-2 flex justify-center lg:justify-end overflow-hidden grow lg:h-auto">
+                  <img
+                     src={`http://localhost:3000${hero.image?.url}`}
+                     alt={hero.image?.alt || "Hero Image"}
+                     className="w-full object-cover lg:w-auto lg:h-auto lg:object-contain pt-16 lg:pt-4"
+                  />
+               </figure>
 
-            <div className="lg:order-1 flex flex-col justify-end lg:justify-center px-0 pt-6 lg:pt-0 pb-10 lg:pb-6">
-               <h1 className="text-4xl pb-5 lg:pb-6">Francesco Dabbicco</h1>
-               <p className="text-base lg:text-lg">
-                  Lorem ipsum dolor sit amet consectetur, adipisicing elit. Asperiores
-                  laudantium, et enim provident, iure quos autem ducimus ad, error ea
-                  adipisci neque alias deleniti consequatur tempora culpa similique
-                  facere. Architecto?
-               </p>
-            </div>
-         </main>
+               <div className="lg:order-1 flex flex-col justify-end lg:justify-center px-0 pt-6 lg:pt-0 pb-10 lg:pb-6">
+                  <h1 className="text-4xl pb-5 lg:pb-6">{hero.title}</h1>
+                  <p className="text-base lg:text-lg">{hero.subtitle}</p>
+               </div>
+            </main>
+         )}
 
-         {/* ! Opere recenti */}
-
+         {/* CAROUSEL */}
          <section className="container mx-auto pb-16 lg:pb-20 overflow-x-hidden">
-            <h2 className="text-3xl pb-6 pt-12">Latest Works</h2>
-            {error && <p className="text-center text-red-500">Error: {error}</p>}
-            {!loading && !error && data.length > 0 && <Carousel items={data} />}
+            <h2 className="text-3xl pb-6 pt-12">Opere recenti</h2>
+            {transformedCarouselItems.length > 0 ? (
+               <Carousel items={transformedCarouselItems} />
+            ) : (
+               <p>No carousel items found.</p>
+            )}
          </section>
 
-         {/* ! In evidenza */}
-
-         <ProjectSection
-            title="Nome Progetto"
-            description={[
-               "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Asperiores laudantium, et enim provident, iure quos autem ducimus ad, error ea adipisci neque alias deleniti consequatur tempora culpa similique facere. Architecto?",
-               "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Asperiores laudantium, et enim provident, iure quos autem ducimus ad, error ea adipisci neque alias deleniti consequatur tempora culpa similique facere. Architecto? Lorem ipsum dolor sit amet consectetur, adipisicing elit. Asperiores laudantium, et enim provident, iure quos autem ducimus ad, error ea adipisci neque alias deleniti consequatur tempora culpa similique facere. Architecto?"
-            ]}
-            imageSrc="https://picsum.photos/id/12/650/800"
-            imageAlt="Francesco Dabbicco"
-            className="lg:mb-20"
-         />
+         {/* PROJECT SECTION */}
+         {project && (
+            <ProjectSection
+               title={project.title}
+               description={project.description}
+               imageSrc={`http://localhost:3000${project.image?.url}`}
+               imageAlt={project.image?.alt || ""}
+               className="lg:mb-20"
+            />
+         )}
       </>
    );
 };
