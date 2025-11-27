@@ -1,14 +1,16 @@
-import usePhotos from '../hooks/usePhotos.min.js';
 import Gallery from '../components/Gallery.jsx';
 import ProjectSection from '../components/ProjectSection.jsx';
+import useProjectSection from '../hooks/useProjectSection.min.js';
+import useGallery from '../hooks/useGallery.min.js';
 
 export default function Works() {
-   const { photos, error } = usePhotos('/images.min.json');
+   const { gallery, error: galleryError } = useGallery('main');
+   const { project, error: projectError } = useProjectSection('test-1');
 
-   if (error) {
+   if (galleryError || projectError) {
       return (
          <div className="flex justify-center my-20">
-            <div>Error loading images</div>
+            <div>Error loading content</div>
          </div>
       );
    }
@@ -16,23 +18,22 @@ export default function Works() {
    return (
       <>
          <main className='min-h-screen pt-6'>
-            <Gallery content={photos} />
+            <Gallery content={gallery} />
          </main>
-         <ProjectSection
-            title="Nome Progetto"
-            description={[
-               "Lorem ipsum dolor sit amet consectetur, adipisicing elit.",
-               "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Laudantium minima totam, fugiat modi perspiciatis suscipit dolores autem dolorum ipsam nam rem, porro odio laborum adipisci esse atque, mollitia earum ut? Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam repellendus nemo provident, possimus natus accusamus numquam debitis officia ad rerum similique voluptatem ipsa, porro sit maiores expedita! Cumque, enim accusamus?",
-               "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Itaque dolorum in qui ipsum incidunt quam ratione, id eligendi? Quo consequatur voluptas cumque ullam, tenetur maiores esse omnis similique laborum itaque."
-            ]}
-            imageSrc="https://picsum.photos/id/12/650/800"
-            imageAlt="Francesco Dabbicco"
-            reverse={true}
-            galleryPhotos={photos}
-            className='lg:pb-0'
-            galleryClassName='lg:mt-4'
-            bg='secondary'
-         />
+         {project && (
+            <ProjectSection
+               title={project.title}
+               subtitle={project.subtitle}
+               description={project.description}
+               imageSrc={`http://localhost:3000${project.image?.url}`}
+               imageAlt={project.image?.alt || ""}
+               galleryPhotos={project.gallery}
+               reverse={true}
+               className='lg:pb-0'
+               galleryClassName='lg:mt-8'
+               bg='secondary'
+            />
+         )}
       </>
    );
 };

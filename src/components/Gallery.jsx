@@ -2,12 +2,54 @@ import { useNavigate } from 'react-router';
 import PhotoAlbum from "react-photo-album";
 import "react-photo-album/styles.css";
 
-export default function Gallery({ content, className }) {
+export default function Gallery({ content, className, baseUrl = 'http://localhost:3000' }) {
    const navigate = useNavigate();
 
    const handlePhotoClick = (photo) => {
       navigate(`/opere/${photo.key}`);
    };
+
+   // Handle different input formats
+   let images = [];
+
+   if (!content) {
+      return null;
+   }
+
+   // If content is a gallery object with images array (from CMS relationship)
+   if (content.images && Array.isArray(content.images)) {
+      images = content.images;
+   }
+   // If content is already an array (legacy format or direct array)
+   else if (Array.isArray(content)) {
+      images = content;
+   }
+
+   // Transform to PhotoAlbum format
+   const processedPhotos = images.map(item => {
+      // If it's already in the correct format (has src, width, height)
+      if (item.src && item.width && item.height) {
+         return item;
+      }
+
+      // If it's coming from CMS (has image object)
+      if (item.image) {
+         return {
+            src: `${baseUrl}${item.image.url}`,
+            alt: item.alt || item.image.alt || "",
+            width: item.image.width || 800,
+            height: item.image.height || 600,
+            key: item.image.id || item.image.filename,
+         };
+      }
+
+      // Fallback: return as is
+      return item;
+   });
+
+   if (processedPhotos.length === 0) {
+      return null;
+   }
 
    return (
       <article className="flex justify-center">
@@ -21,31 +63,29 @@ export default function Gallery({ content, className }) {
             }
          `}</style>
          <div className={`container w-full my-5 lg:my-16 ${className}`}>
-            {content.length > 0 && (
-               <PhotoAlbum 
-                  layout="rows"
-                  photos={content}
-                  spacing={16}
-                  padding={0}
-                  targetRowHeight={300}
-                  breakpoints={[300, 600, 1100]}
-                  onClick={({ photo }) => handlePhotoClick(photo)}
-                  renderPhoto={({ photo, wrapperStyle }) => (
-                     <div style={wrapperStyle}>
-                        <img
-                           src={photo.src}
-                           alt=""
-                           style={{
-                              width: '100%',
-                              height: '100%',
-                              objectFit: 'cover',
-                           }}
-                           className="react-photo-album--image"
-                        />
-                     </div>
-                  )}
-               />
-            )}
+            <PhotoAlbum
+               layout="rows"
+               photos={processedPhotos}
+               spacing={16}
+               padding={0}
+               targetRowHeight={300}
+               breakpoints={[300, 600, 1100]}
+               onClick={({ photo }) => handlePhotoClick(photo)}
+               renderPhoto={({ photo, wrapperStyle }) => (
+                  <div style={wrapperStyle}>
+                     <img
+                        src={photo.src}
+                        alt={photo.alt || ""}
+                        style={{
+                           width: '100%',
+                           height: '100%',
+                           objectFit: 'cover',
+                        }}
+                        className="react-photo-album--image"
+                     />
+                  </div>
+               )}
+            />
          </div>
       </article>
    );

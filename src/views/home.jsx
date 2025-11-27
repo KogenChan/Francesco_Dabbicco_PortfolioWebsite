@@ -1,6 +1,7 @@
 import Carousel from "../components/Carousel";
 import ProjectSection from "../components/ProjectSection.jsx";
 import useFetchData from "../hooks/useFetchData.min.js";
+import useProjectSection from "../hooks/useProjectSection.min.js";
 
 export default function Home() {
    const PAYLOAD_API = import.meta.env.VITE_PAYLOAD_API_URL;
@@ -13,14 +14,11 @@ export default function Home() {
       `${PAYLOAD_API}/carousel-item?sort=order`
    );
 
-   const { data: projectData, loading: projectLoading, error: projectError } = useFetchData(
-      `${PAYLOAD_API}/project-section?limit=1`
-   );
+   // Fetch specific project by slug
+   const { project, loading: projectLoading, error: projectError } = useProjectSection('homepage');
 
-   // Safely grab first items
    const hero = heroData?.docs?.[0];
    const carouselItems = carouselData?.docs || [];
-   const project = projectData?.docs?.[0];
 
    const transformedCarouselItems = carouselItems.map(item => ({
       id: item.id,
@@ -28,7 +26,6 @@ export default function Home() {
       alt: item.image?.alt || `Carousel image ${item.order}`
    }));
 
-   // Optional: show loading or errors
    if (heroLoading || carouselLoading || projectLoading) return <p>Loading...</p>;
    if (heroError) return <p className="text-red-500">Hero Error: {heroError}</p>;
    if (carouselError) return <p className="text-red-500">Carousel Error: {carouselError}</p>;
@@ -55,8 +52,8 @@ export default function Home() {
          )}
 
          {/* CAROUSEL */}
-         <section className="container mx-auto pb-16 lg:pb-20 overflow-x-hidden">
-            <h2 className="text-3xl pb-6 pt-12">Opere recenti</h2>
+         <section className="container mx-auto pb-16 lg:pb-14 overflow-x-hidden">
+            <h2 className="text-3xl pb-6 pt-4">Opere recenti</h2>
             {transformedCarouselItems.length > 0 ? (
                <Carousel items={transformedCarouselItems} />
             ) : (
@@ -68,10 +65,12 @@ export default function Home() {
          {project && (
             <ProjectSection
                title={project.title}
+               subtitle={project.subtitle}
                description={project.description}
                imageSrc={`http://localhost:3000${project.image?.url}`}
                imageAlt={project.image?.alt || ""}
-               className="lg:mb-20"
+               galleryPhotos={project.gallery}
+               className="lg:mb-0 lg:pb-0"
             />
          )}
       </>

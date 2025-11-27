@@ -1,51 +1,49 @@
-import usePhotos from '../hooks/usePhotos.min.js';
 import ProjectSection from '../components/ProjectSection.jsx';
+import useProjectSection from '../hooks/useProjectSection.min.js';
 
 export default function Installations() {
-   const { photos, error } = usePhotos('/images.min.json');
+   const { project: project1, error: error1 } = useProjectSection('nuces');
+   const { project: project2, error: error2 } = useProjectSection('test-1');
 
-   if (error) {
+   if (error1 || error2) {
       return (
          <div className="flex justify-center my-20">
-            <div>Error loading images</div>
+            <div>Error loading content</div>
          </div>
       );
    }
 
    return (
-      <>
-         <main className='min-h-screen mt-8 lg:mt-0'>
+      <main>
+         {project1 && (
             <ProjectSection
-               title="Nome Progetto"
-               description={[
-                  "Lorem ipsum dolor sit amet consectetur, adipisicing elit.",
-                  "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Laudantium minima totam, fugiat modi perspiciatis suscipit dolores autem dolorum ipsam nam rem, porro odio laborum adipisci esse atque, mollitia earum ut? Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam repellendus nemo provident, possimus natus accusamus numquam debitis officia ad rerum similique voluptatem ipsa, porro sit maiores expedita! Cumque, enim accusamus?",
-                  "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Itaque dolorum in qui ipsum incidunt quam ratione, id eligendi? Quo consequatur voluptas cumque ullam, tenetur maiores esse omnis similique laborum itaque."
-               ]}
-               imageSrc="https://picsum.photos/id/12/650/800"
-               imageAlt="Francesco Dabbicco"
+               title={project1.title}
+               subtitle={project1.subtitle}
+               description={project1.description}
+               imageSrc={`http://localhost:3000${project1.image?.url}`}
+               imageAlt={project1.image?.alt || ""}
+               galleryPhotos={project1.gallery}
                reverse={true}
-               galleryPhotos={photos}
                className='lg:pb-0'
-               galleryClassName='lg:mt-4'
+               galleryClassName='lg:mt-0'
                bg='primary'
             />
+         )}
+         
+         {project2 && (
             <ProjectSection
-               title="Nome Progetto"
-               description={[
-                  "Lorem ipsum dolor sit amet consectetur, adipisicing elit.",
-                  "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Laudantium minima totam, fugiat modi perspiciatis suscipit dolores autem dolorum ipsam nam rem, porro odio laborum adipisci esse atque, mollitia earum ut? Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam repellendus nemo provident, possimus natus accusamus numquam debitis officia ad rerum similique voluptatem ipsa, porro sit maiores expedita! Cumque, enim accusamus?",
-                  "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Itaque dolorum in qui ipsum incidunt quam ratione, id eligendi? Quo consequatur voluptas cumque ullam, tenetur maiores esse omnis similique laborum itaque."
-               ]}
-               imageSrc="https://picsum.photos/id/12/650/800"
-               imageAlt="Francesco Dabbicco"
+               title={project2.title}
+               subtitle={project2.subtitle}
+               description={project2.description}
+               imageSrc={`http://localhost:3000${project2.image?.url}`}
+               imageAlt={project2.image?.alt || ""}
+               galleryPhotos={project2.gallery}
                reverse={false}
-               galleryPhotos={photos}
                className='lg:pb-0'
-               galleryClassName='lg:mt-4'
+               galleryClassName='lg:mt-0 lg:mb-8'
                bg='secondary'
             />
-         </main>
-      </>
+         )}
+      </main>
    );
 };
