@@ -1,39 +1,10 @@
 import { useParams } from 'react-router';
-import { useRef, useState, useEffect } from 'react';
-import usePhotos from '../hooks/usePhotos.min.js';
+import useMediaItem from '../hooks/useMediaItem.min.js';
+import RichText from '../components/RichText.jsx';
 
 export default function WorkDetail() {
    const { itemName } = useParams();
-   const { photos, loading, error } = usePhotos('/images.min.json', { waitForRender: false });
-   const imgRef = useRef(null);
-   const [imgWidth, setImgWidth] = useState(0);
-
-   const photo = photos.find(p => p.key === Number(itemName));
-
-   const updateWidth = () => {
-      if (imgRef.current) {
-         setImgWidth(imgRef.current.offsetWidth);
-      }
-   };
-
-   useEffect(() => {
-      if (!loading && photo) {
-         updateWidth();
-         window.addEventListener('resize', updateWidth);
-
-         return () => {
-            window.removeEventListener('resize', updateWidth);
-         };
-      }
-   }, [loading, photo]);
-
-   if (loading) {
-      return (
-         <div className="flex justify-center items-center h-screen">
-            <div>Loading...</div>
-         </div>
-      );
-   }
+   const { media, error } = useMediaItem(itemName);
 
    if (error) {
       return (
@@ -43,7 +14,7 @@ export default function WorkDetail() {
       );
    }
 
-   if (!photo) {
+   if (!media) {
       return (
          <div className="flex justify-center items-center h-screen">
             <div>Work not found</div>
@@ -51,22 +22,43 @@ export default function WorkDetail() {
       );
    }
 
+   const additionalImages = Array.isArray(media.additionalImages)
+      ? media.additionalImages
+      : [];
+
    return (
-      <main className="w-full flex justify-center items-center">
-         <div className='pt-17 px-4 lg:px-0'>
-            <img
-               ref={imgRef}
-               src={photo.src}
-               alt={`Work ${itemName}`}
-               className="h-auto detailImg object-contain"
-               onLoad={updateWidth}
-            />
-            <p
-               className="text-base-content italic text-xs mt-2 text-right"
-               style={{ maxWidth: imgWidth ? `${imgWidth}px` : '100%' }}
-            >
-               Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-            </p>
+      <main className="w-full flex justify-center items-center py-20">
+         <div className='px-4 lg:px-0 max-w-4xl w-full'>
+            {/* Main Image */}
+            <div className="flex justify-center mb-2">
+               <img
+                  src={`http://localhost:3000${media.url}`}
+                  alt={media.alt || `Work ${media.filename}`}
+                  className="w-full h-auto object-contain"
+               />
+            </div>
+
+            {/* Caption (only under first image) */}
+            {media.caption && (
+               <div className="text-base-content italic text-sm mb-12 text-end">
+                  <RichText content={media.caption} />
+               </div>
+            )}
+
+            {/* Additional Images in Column */}
+            {additionalImages.length > 0 && (
+               <div className="space-y-6 mt-8">
+                  {additionalImages.map((image, index) => (
+                     <div key={image.id || index} className="flex justify-center">
+                        <img
+                           src={`http://localhost:3000${image.url}`}
+                           alt={image.alt || `Additional view ${index + 1}`}
+                           className="w-full h-auto object-contain"
+                        />
+                     </div>
+                  ))}
+               </div>
+            )}
          </div>
       </main>
    );

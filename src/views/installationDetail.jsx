@@ -1,19 +1,10 @@
 import { useParams } from 'react-router';
-import usePhotos from '../hooks/usePhotos.min.js';
+import useMediaItem from '../hooks/useMediaItem.min.js';
+import RichText from '../components/RichText.jsx';
 
 export default function InstallationDetail() {
    const { itemName } = useParams();
-   const { photos, loading, error } = usePhotos('/installations.min.json'); // Different JSON file
-   
-   const photo = photos.find(p => p.key === Number(itemName));
-
-   if (loading) {
-      return (
-         <div className="flex justify-center my-20">
-            <div>Loading...</div>
-         </div>
-      );
-   }
+   const { media, error } = useMediaItem(itemName);
 
    if (error) {
       return (
@@ -23,7 +14,7 @@ export default function InstallationDetail() {
       );
    }
 
-   if (!photo) {
+   if (!media) {
       return (
          <div className="flex justify-center my-20">
             <div>Installation not found</div>
@@ -36,18 +27,17 @@ export default function InstallationDetail() {
          <main className="container w-full my-20">
             <div className="max-w-4xl mx-auto">
                <img 
-                  src={photo.src} 
-                  alt={`Installation ${itemName}`}
-                  className="w-full h-auto"
+                  src={`http://localhost:3000${media.url}`}
+                  alt={media.alt || `Installation ${media.filename}`}
+                  className="w-full h-auto mb-2"
                />
-               <div className="mt-6">
-                  <h2 className="text-2xl font-semibold mb-4">{itemName}</h2>
-                  <p className="text-base text-gray-700">
-                     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris. Installation-specific details here.
-                  </p>
-               </div>
+               {media.caption && (
+                  <div className='text-end'>
+                     <RichText content={media.caption} />
+                  </div>
+               )}
             </div>
          </main>
       </div>
    );
-}
+};

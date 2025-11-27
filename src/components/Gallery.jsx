@@ -2,14 +2,18 @@ import { useNavigate } from 'react-router';
 import PhotoAlbum from "react-photo-album";
 import "react-photo-album/styles.css";
 
-export default function Gallery({ content, className, baseUrl = 'http://localhost:3000' }) {
+export default function Gallery({ 
+   content, 
+   className, 
+   baseUrl = 'http://localhost:3000',
+   detailRoute = '/opere'
+}) {
    const navigate = useNavigate();
 
    const handlePhotoClick = (photo) => {
-      navigate(`/opere/${photo.key}`);
+      navigate(`${detailRoute}/${photo.key}`);
    };
 
-   // Handle different input formats
    let images = [];
 
    if (!content) {
@@ -39,7 +43,7 @@ export default function Gallery({ content, className, baseUrl = 'http://localhos
             alt: item.alt || item.image.alt || "",
             width: item.image.width || 800,
             height: item.image.height || 600,
-            key: item.image.id || item.image.filename,
+            key: item.image.id, // Use media ID instead of numeric key
          };
       }
 

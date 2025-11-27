@@ -18,7 +18,7 @@ export default function Works() {
    return (
       <>
          <main className='min-h-screen pt-6'>
-            <Gallery content={gallery} />
+            <Gallery content={gallery} detailRoute="/opere" />
          </main>
          {project && (
             <ProjectSection

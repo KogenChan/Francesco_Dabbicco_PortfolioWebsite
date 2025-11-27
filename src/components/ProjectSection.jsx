@@ -11,7 +11,8 @@ export default function ProjectSection({
    galleryPhotos = null,
    className = '',
    galleryClassName = '',
-   bg = ''
+   bg = '',
+   detailRoute = ''
 }) {
    return (
       <>
@@ -49,7 +50,11 @@ export default function ProjectSection({
 
             {/* # Optional Gallery */}
             {galleryPhotos && (
-               <Gallery content={galleryPhotos} className={galleryClassName} />
+               <Gallery
+                  content={galleryPhotos}
+                  className={galleryClassName}
+                  detailRoute={detailRoute || '/opere'}
+               />
             )}
          </section>
       </>
