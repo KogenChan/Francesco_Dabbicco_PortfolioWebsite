@@ -6,16 +6,15 @@ import useProjectSection from "../hooks/useProjectSection.min.js";
 export default function Home() {
    const PAYLOAD_API = import.meta.env.VITE_PAYLOAD_API_URL;
 
-   const { data: heroData, loading: heroLoading, error: heroError } = useFetchData(
+   const { data: heroData, error: heroError } = useFetchData(
       `${PAYLOAD_API}/homepage-hero?limit=1`
    );
 
-   const { data: carouselData, loading: carouselLoading, error: carouselError } = useFetchData(
+   const { data: carouselData, error: carouselError } = useFetchData(
       `${PAYLOAD_API}/carousel-item?sort=order`
    );
 
-   // Fetch specific project by slug
-   const { project, loading: projectLoading, error: projectError } = useProjectSection('homepage');
+   const { project, error: projectError } = useProjectSection('homepage');
 
    const hero = heroData?.docs?.[0];
    const carouselItems = carouselData?.docs || [];
@@ -26,7 +25,6 @@ export default function Home() {
       alt: item.image?.alt || `Carousel image ${item.order}`
    }));
 
-   if (heroLoading || carouselLoading || projectLoading) return <p>Loading...</p>;
    if (heroError) return <p className="text-red-500">Hero Error: {heroError}</p>;
    if (carouselError) return <p className="text-red-500">Carousel Error: {carouselError}</p>;
    if (projectError) return <p className="text-red-500">Project Error: {projectError}</p>;

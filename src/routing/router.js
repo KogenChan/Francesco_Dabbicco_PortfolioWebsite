@@ -7,6 +7,7 @@ import Installations from "../views/installations";
 import WorkDetail from "../views/workDetail";
 import InstallationDetail from "../views/installationDetail";
 import Contacts from "../views/contacts";
+import About from "../views/about";
 
 const router = createBrowserRouter([
    {
@@ -36,6 +37,10 @@ const router = createBrowserRouter([
          {
             path: routes.contact,
             Component: Contacts
+         },
+         {
+            path: routes.about,
+            Component: About
          }
       ]
    }

@@ -100,7 +100,7 @@ html {
 }
 
 * {
-   scrollbar-width: thin;
+   scrollbar-width: auto;
    scrollbar-color: #8b9fdd #fff;
 }
 
@@ -111,10 +111,12 @@ html {
    display: flex;
    align-items: center;
    height: 40px;
-   width: 160px;
+   width: 156px;
    overflow: hidden;
-   clip-path: inset(0 0 0 calc(100% - 39px) round 50px);
-   transition: clip-path 0.3s ease-in-out, opacity 0.2s ease;
+   clip-path: inset(0 0 0 calc(100% - 44px) round 50px);
+   transition: all 0.3s ease-in-out;
+   border: 2px solid transparent;
+   background-color: transparent;
 }
 
 .btn-top svg {
@@ -123,7 +125,7 @@ html {
    right: 0px;
    flex-shrink: 0;
    transition: right 0.3s ease-in-out, background-color 0.3s ease-in-out, color 0.3s ease-in-out;
-   outline: 1px solid #8b9fdd;
+   outline: none;
 }
 
 .btn-top span {
@@ -165,13 +167,15 @@ html {
    .btn-top:hover {
       cursor: pointer;
       clip-path: inset(0 0 0 0 round 50px);
+      border-color: #222;
+      background-color: white;
    }
 
    .btn-top:hover svg {
       right: calc(100% - 40px);
       background-color: #f1ac6a;
-      color: #6a7aaa;
-      outline: 1px solid #f1ac6a;
+      color: #fff;
+      outline: none;
    }
 
    .btn-top:hover span {

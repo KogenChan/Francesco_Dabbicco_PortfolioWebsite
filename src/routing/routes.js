@@ -4,7 +4,8 @@ const routes = {
    installations: '/installazioni',
    workDetail: '/opere/:itemName',
    installationDetail: '/installazioni/:itemName',
-   contact: '/contatti'
+   contact: '/contatti',
+   about: '/about',
 }
 
 export default routes

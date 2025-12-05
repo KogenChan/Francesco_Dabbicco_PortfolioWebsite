@@ -29,7 +29,8 @@ export default function Navbar() {
                   </div>
                </div>
 
-               <div className="hidden md:flex items-center">
+               <div className="hidden md:flex items-center gap-4">
+                  <Link to={routes.about} className="text-sm font-semibold hover:text-secondary-content transition-colors duration-100">About</Link>
                   <Link to={routes.contact} className="text-sm font-semibold hover:text-accent-content transition-colors duration-100">Contatti</Link>
                </div>
 
@@ -50,7 +51,7 @@ export default function Navbar() {
 
          {/* Mobile Menu */}
          <div className={`md:hidden overflow-hidden navShadow transition-all duration-300 ${isOpen ? 'max-h-64' : 'max-h-0'}`}>
-            <div className="mx-auto p-0 flex flex-col bg-secondary border-t border-b border-base-content">
+            <div className="mx-auto p-0 flex flex-col bg-white border-t border-base-content">
                <Link
                   to={routes.home}
                   className={`font-semibold hover:text-secondary-content transition-colors duration-100 px-4 py-3 ${isActive(routes.home) ? 'bg-accent-content font-light text-white' : ''}`}
@@ -71,6 +72,13 @@ export default function Navbar() {
                   onClick={() => setIsOpen(false)}
                >
                   Installazioni
+               </Link>
+               <Link
+                  to={routes.about}
+                  className={`font-semibold hover:text-secondary-content transition-colors duration-100 px-4 py-3 ${isActive(routes.about) ? 'bg-accent-content font-light text-white' : ''}`}
+                  onClick={() => setIsOpen(false)}
+               >
+                  About
                </Link>
                <Link
                   to={routes.contact}
