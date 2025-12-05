@@ -80,11 +80,6 @@ export default function Gallery({
                      <img
                         src={photo.src}
                         alt={photo.alt || ""}
-                        style={{
-                           width: '100%',
-                           height: '100%',
-                           objectFit: 'cover',
-                        }}
                         className="react-photo-album--image"
                      />
                   </div>

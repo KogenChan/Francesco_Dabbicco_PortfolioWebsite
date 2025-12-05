@@ -36,7 +36,7 @@ export default function ProjectSection({
                </figure>
 
                {/* # Text content */}
-               <div className={`flex flex-col justify-end lg:justify-center px-0 pt-6 lg:pt-0 pb-10 lg:pb-0 ${reverse ? 'lg:ps-0 lg:pe-4 lg:order-1' : 'lg:ps-4 lg:pe-0 lg:order-2'
+               <div className={`flex flex-col justify-end lg:justify-center px-0 pt-6 lg:pt-0 pb-10 lg:pb-8 ${reverse ? 'lg:ps-0 lg:pe-4 lg:order-1' : 'lg:ps-4 lg:pe-0 lg:order-2'
                   }`}>
                   <div className="hidden lg:block pb-8">
                      <h1 className="text-4xl">{title}</h1>

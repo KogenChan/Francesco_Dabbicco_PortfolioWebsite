@@ -17,7 +17,7 @@ export default function Works() {
 
    return (
       <>
-         <main className='min-h-screen pt-6'>
+         <main className='pt-12'>
             <Gallery content={gallery} detailRoute="/opere" />
          </main>
          {project && (
@@ -30,7 +30,7 @@ export default function Works() {
                galleryPhotos={project.gallery}
                reverse={true}
                className='lg:pb-0'
-               galleryClassName='lg:mt-8'
+               galleryClassName='lg:mt-8 lg:mb-8'
                bg='secondary'
             />
          )}

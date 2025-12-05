@@ -52,8 +52,8 @@ export default function Home() {
          )}
 
          {/* CAROUSEL */}
-         <section className="container mx-auto pb-16 lg:pb-14 overflow-x-hidden">
-            <h2 className="text-3xl pb-6 pt-4">Opere recenti</h2>
+         <section className="container mx-auto pb-8 lg:pb-14 overflow-x-hidden">
+            <h2 className="text-4xl pb-6 pt-4">Opere recenti</h2>
             {transformedCarouselItems.length > 0 ? (
                <Carousel items={transformedCarouselItems} />
             ) : (
