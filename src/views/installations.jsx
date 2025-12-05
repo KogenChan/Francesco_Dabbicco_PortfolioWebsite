@@ -26,7 +26,6 @@ export default function Installations() {
                reverse={true}
                className='lg:pb-0 pt-10 lg:pt-16'
                galleryClassName='lg:mt-8'
-               bg='primary'
                detailRoute="/installazioni"
             />
          )}
@@ -42,7 +41,6 @@ export default function Installations() {
                reverse={false}
                className='lg:pb-0'
                galleryClassName='lg:mt-8 lg:mb-8'
-               bg='secondary'
                detailRoute="/installazioni"
             />
          )}

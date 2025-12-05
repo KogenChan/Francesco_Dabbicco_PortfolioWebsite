@@ -17,7 +17,7 @@ export default function Works() {
 
    return (
       <>
-         <main className='pt-12'>
+         <main className='pt-11 lg:pt-12'>
             <Gallery content={gallery} detailRoute="/opere" />
          </main>
          {project && (
@@ -31,7 +31,6 @@ export default function Works() {
                reverse={true}
                className='lg:pb-0'
                galleryClassName='lg:mt-8 lg:mb-8'
-               bg='secondary'
             />
          )}
       </>
