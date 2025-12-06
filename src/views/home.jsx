@@ -2,6 +2,7 @@ import Carousel from "../components/Carousel";
 import ProjectSection from "../components/ProjectSection.jsx";
 import useFetchData from "../hooks/useFetchData.min.js";
 import useProjectSection from "../hooks/useProjectSection.min.js";
+import RichText from "../components/RichText.jsx";
 
 export default function Home() {
    const PAYLOAD_API = import.meta.env.VITE_PAYLOAD_API_URL;
@@ -44,7 +45,9 @@ export default function Home() {
 
                <div className="lg:order-1 flex flex-col justify-end lg:justify-center px-0 pt-6 lg:pt-0 pb-10 lg:pb-6">
                   <h1 className="text-4xl pb-5 lg:pb-6">{hero.title}</h1>
-                  <p className="text-base lg:text-lg">{hero.subtitle}</p>
+                  <p className="text-base lg:text-lg">
+                     <RichText content={hero.text} />
+                  </p>
                </div>
             </main>
          )}

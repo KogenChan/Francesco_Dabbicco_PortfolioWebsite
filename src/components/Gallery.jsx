@@ -2,9 +2,9 @@ import { useNavigate } from 'react-router';
 import PhotoAlbum from "react-photo-album";
 import "react-photo-album/styles.css";
 
-export default function Gallery({ 
-   content, 
-   className, 
+export default function Gallery({
+   content,
+   className,
    baseUrl = 'http://localhost:3000',
    detailRoute = '/opere'
 }) {
@@ -38,12 +38,16 @@ export default function Gallery({
 
       // If it's coming from CMS (has image object)
       if (item.image) {
+         // Use thumbnail for gallery grid, full image for detail
+         const thumbnailUrl = item.image.sizes?.card?.url || item.image.url;
+
          return {
-            src: `${baseUrl}${item.image.url}`,
+            src: `${baseUrl}${thumbnailUrl}`,
             alt: item.alt || item.image.alt || "",
-            width: item.image.width || 800,
-            height: item.image.height || 600,
+            width: item.image.sizes?.card?.width || item.image.width || 800,
+            height: item.image.sizes?.card?.height || item.image.height || 600,
             key: item.image.id, // Use media ID instead of numeric key
+            fullImageUrl: `${baseUrl}${item.image.url}`, // Store full res URL for detail page
          };
       }
 
@@ -81,6 +85,7 @@ export default function Gallery({
                         src={photo.src}
                         alt={photo.alt || ""}
                         className="react-photo-album--image"
+                        loading="lazy"
                      />
                   </div>
                )}

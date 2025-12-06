@@ -27,7 +27,7 @@ export default function ProjectSection({
                </div>
 
                {/* # Image */}
-               <figure className={`flex overflow-hidden grow lg:h-auto ${reverse ? 'justify-end lg:ms-4 lg:me-0 lg:order-2' : 'justify-start lg:ms-0 lg:me-4 lg:order-1'}`}>
+               <figure className={`flex overflow-hidden grow lg:h-auto lg:mx-0 ${reverse ? 'justify-end lg:order-2' : 'justify-start lg:order-1'}`}>
                   <img
                      src={imageSrc}
                      alt={imageAlt}
