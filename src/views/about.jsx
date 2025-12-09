@@ -5,7 +5,7 @@ export default function About() {
    const PAYLOAD_API = import.meta.env.VITE_PAYLOAD_API_URL;
 
    const { data: aboutData, error } = useFetchData(
-      `${PAYLOAD_API}/about?limit=1`
+      `${PAYLOAD_API}/api/about?limit=1`
    );
 
    const about = aboutData?.docs?.[0];

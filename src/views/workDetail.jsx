@@ -29,29 +29,26 @@ export default function WorkDetail() {
    return (
       <main className="w-full flex justify-center items-center py-20">
          <div className='px-4 lg:px-0 max-w-4xl w-full'>
-            {/* Main Image */}
             <div className="flex justify-center mb-2">
                <img
-                  src={`http://localhost:3000${media.url}`}
+                  src={media.url}
                   alt={media.alt || `Work ${media.filename}`}
                   className="w-full h-auto object-contain"
                />
             </div>
 
-            {/* Caption (only under first image) */}
             {media.caption && (
                <div className="text-base-content italic text-sm mb-12 text-end">
                   <RichText content={media.caption} />
                </div>
             )}
 
-            {/* Additional Images in Column */}
             {additionalImages.length > 0 && (
                <div className="space-y-6 mt-8">
                   {additionalImages.map((image, index) => (
                      <div key={image.id || index} className="flex justify-center">
                         <img
-                           src={`http://localhost:3000${image.url}`}
+                           src={image.url}
                            alt={image.alt || `Additional view ${index + 1}`}
                            className="w-full h-auto object-contain"
                         />

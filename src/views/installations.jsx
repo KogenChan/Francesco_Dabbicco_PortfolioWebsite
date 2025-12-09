@@ -20,7 +20,7 @@ export default function Installations() {
                title={project1.title}
                subtitle={project1.subtitle}
                description={project1.description}
-               imageSrc={`http://localhost:3000${project1.image?.url}`}
+               imageSrc={project1.image?.url}
                imageAlt={project1.image?.alt || ""}
                galleryPhotos={project1.gallery}
                reverse={true}
@@ -29,13 +29,13 @@ export default function Installations() {
                detailRoute="/installazioni"
             />
          )}
-         
+
          {project2 && (
             <ProjectSection
                title={project2.title}
                subtitle={project2.subtitle}
                description={project2.description}
-               imageSrc={`http://localhost:3000${project2.image?.url}`}
+               imageSrc={project2.image?.url}
                imageAlt={project2.image?.alt || ""}
                galleryPhotos={project2.gallery}
                reverse={false}

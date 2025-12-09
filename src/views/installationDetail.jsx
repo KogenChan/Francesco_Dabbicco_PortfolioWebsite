@@ -26,8 +26,8 @@ export default function InstallationDetail() {
       <div className="flex justify-center">
          <main className="container w-full my-20">
             <div className="max-w-4xl mx-auto">
-               <img 
-                  src={`http://localhost:3000${media.url}`}
+               <img
+                  src={media.url}
                   alt={media.alt || `Installation ${media.filename}`}
                   className="w-full h-auto mb-2"
                />

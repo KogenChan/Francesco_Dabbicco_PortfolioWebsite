@@ -25,7 +25,7 @@ export default function Works() {
                title={project.title}
                subtitle={project.subtitle}
                description={project.description}
-               imageSrc={`http://localhost:3000${project.image?.url}`}
+               imageSrc={project.image?.url}
                imageAlt={project.image?.alt || ""}
                galleryPhotos={project.gallery}
                reverse={true}
