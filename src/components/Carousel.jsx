@@ -2,7 +2,7 @@ import { useRef, useState, useEffect } from "react";
 import CarouselButton from "./CarouselButton";
 import useImageZoom from "../hooks/useImageZoom";
 
-export default function Carousel({ items, baseUrl = 'http://localhost:3000' }) {
+export default function Carousel({ items }) {
    const scrollRef = useRef(null);
    const [touchStart, setTouchStart] = useState(0);
    const [touchEnd, setTouchEnd] = useState(0);
@@ -86,21 +86,18 @@ export default function Carousel({ items, baseUrl = 'http://localhost:3000' }) {
    const stretchDistance = Math.abs(nextDotPosition - dotPosition);
    const stretchWidth = dotSize + stretchDistance;
 
-   // Process items to use thumbnails for carousel, full res for zoom
    const processedItems = items.map((item) => {
-      // If item has CMS image object with sizes
       if (item.image && typeof item.image === 'object') {
-         const thumbnailUrl = item.image.sizes?.thumbnail?.url || item.image.url;
-         const fullUrl = item.image.sizes?.full?.url || item.image.url;
+         const thumbnailUrl = item.image.sizes?.card?.url || item.image.sizes?.thumbnail?.url || item.image.url;
+         const fullUrl = item.image.sizes?.card?.url || item.image.sizes?.thumbnail?.url || item.image.url;;
 
          return {
             ...item,
-            thumbnailSrc: `${baseUrl}${thumbnailUrl}`,
-            fullSrc: `${baseUrl}${fullUrl}`,
+            thumbnailSrc: thumbnailUrl,
+            fullSrc: fullUrl,
          };
       }
 
-      // Legacy format - item.image is just a string URL
       return {
          ...item,
          thumbnailSrc: item.image,
@@ -108,17 +105,11 @@ export default function Carousel({ items, baseUrl = 'http://localhost:3000' }) {
       };
    });
 
-   // Custom image click handler that passes full resolution image to zoom
    const handleCarouselImageClick = (e) => {
       const fullSrc = e.target.dataset.fullSrc;
-
-      // Temporarily change the src to full resolution for the zoom modal
       const originalSrc = e.target.src;
       e.target.src = fullSrc;
-
       handleImageClick(e);
-
-      // Restore thumbnail src after a brief delay
       setTimeout(() => {
          e.target.src = originalSrc;
       }, 100);
@@ -155,7 +146,7 @@ export default function Carousel({ items, baseUrl = 'http://localhost:3000' }) {
                   <img
                      src={item.thumbnailSrc}
                      data-full-src={item.fullSrc}
-                     alt={`Image ${item.id}`}
+                     alt={item.alt}
                      onClick={handleCarouselImageClick}
                      className="w-full aspect-square object-cover cursor-pointer hover:opacity-80 transition"
                      loading="lazy"

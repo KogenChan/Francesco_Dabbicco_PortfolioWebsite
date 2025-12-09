@@ -12,7 +12,7 @@ export default function Home() {
    );
 
    const { data: carouselData, error: carouselError } = useFetchData(
-      `${PAYLOAD_API}/api/carousel-item?sort=order`
+      `${PAYLOAD_API}/api/carousel-item?sort=order&depth=1`  // Add depth=1
    );
 
    const { project, error: projectError } = useProjectSection('homepage');
@@ -22,7 +22,7 @@ export default function Home() {
 
    const transformedCarouselItems = carouselItems.map(item => ({
       id: item.id,
-      image: typeof item.image === 'object' ? item.image?.url : item.image,
+      image: item.image,
       alt: typeof item.image === 'object' ? item.image?.alt : `Carousel image ${item.order}`
    }));
 
