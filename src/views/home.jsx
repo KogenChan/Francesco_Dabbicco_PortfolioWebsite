@@ -75,7 +75,7 @@ export default function Home() {
                   imageAlt={typeof project.image === 'object' ? project.image?.alt : ""}
                   galleryPhotos={project.gallery}
                   className="lg:mb-0 lg:pb-0"
-                  textClassName='ps-8'
+                  textClassName='ps-0 lg:ps-8'
                />
             </Link>
          )}

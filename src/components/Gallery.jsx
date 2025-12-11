@@ -1,18 +1,39 @@
 import { useNavigate } from 'react-router';
 import PhotoAlbum from "react-photo-album";
 import "react-photo-album/styles.css";
+import useImageZoom from '../hooks/useImageZoom';
 
 export default function Gallery({
    content,
    className,
-   detailRoute = '/opere'
+   detailRoute = '/opere',
+   useZoomModal = false
 }) {
    const navigate = useNavigate();
+   const { handleImageClick, ZoomModal } = useImageZoom();
 
-   const handlePhotoClick = (photo) => {
-      // If the photo has a mainWork reference, navigate to that instead
-      const targetSlug = photo.mainWorkSlug || photo.slug;
-      navigate(`${detailRoute}/${targetSlug}`);
+   const handlePhotoClick = (photo, event, index) => {
+      if (useZoomModal) {
+         // Create a synthetic event with the full src from photo data
+         const syntheticEvent = {
+            preventDefault: () => { },
+            stopPropagation: () => { },
+            target: {
+               ...event.target,
+               src: photo.src,
+               dataset: {
+                  fullSrc: photo.fullSrc
+               },
+               getBoundingClientRect: () => event.target.getBoundingClientRect()
+            }
+         };
+         // Pass all processed photos for carousel navigation
+         handleImageClick(syntheticEvent, processedPhotos, index);
+      } else {
+         // For works: navigate to detail page
+         const targetSlug = photo.mainWorkSlug || photo.slug;
+         navigate(`${detailRoute}/${targetSlug}`);
+      }
    };
 
    let images = [];
@@ -20,7 +41,7 @@ export default function Gallery({
    if (!content) {
       return null;
    } else {
-      images = content.images
+      images = content.images;
    }
 
    // Transform to PhotoAlbum format
@@ -31,21 +52,24 @@ export default function Gallery({
 
       if (item.image) {
          const thumbnailUrl = item.image.sizes?.card?.url || item.image.url;
-         
+         // Use full size for zoom modal (sizes.full or original url)
+         const fullUrl = item.image.sizes?.full?.url || item.image.url;
+
          const formatFilename = (filename) => {
             if (!filename) return null;
             return filename.replace(/\.[^/.]+$/, '').replace(/\s+/g, '_');
          };
 
          return {
-            src: `${thumbnailUrl}`,
+            src: thumbnailUrl,
+            fullSrc: fullUrl,
             alt: item.alt || item.image.alt || "",
             width: item.image.sizes?.card?.width || item.image.width || 800,
             height: item.image.sizes?.card?.height || item.image.height || 600,
             key: item.image.id,
             slug: formatFilename(item.image.filename),
             mainWorkSlug: item.image.mainWork?.filename ? formatFilename(item.image.mainWork.filename) : null,
-            fullImageUrl: `${item.image.url}`,
+            test: item,
          };
       }
 
@@ -76,11 +100,12 @@ export default function Gallery({
                padding={0}
                targetRowHeight={300}
                breakpoints={[300, 600, 1100]}
-               onClick={({ photo }) => handlePhotoClick(photo)}
+               onClick={({ photo, event, index }) => handlePhotoClick(photo, event, index)}
                renderPhoto={({ photo, wrapperStyle }) => (
                   <div style={wrapperStyle}>
                      <img
                         src={photo.src}
+                        data-full-src={photo.fullSrc || photo.src}
                         alt={photo.alt || ""}
                         className="react-photo-album--image"
                         loading="lazy"
@@ -89,6 +114,8 @@ export default function Gallery({
                )}
             />
          </div>
+
+         {useZoomModal && <ZoomModal />}
       </article>
    );
 };

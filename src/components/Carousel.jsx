@@ -105,11 +105,11 @@ export default function Carousel({ items }) {
       };
    });
 
-   const handleCarouselImageClick = (e) => {
+   const handleCarouselImageClick = (e, index) => {
       const fullSrc = e.target.dataset.fullSrc;
       const originalSrc = e.target.src;
       e.target.src = fullSrc;
-      handleImageClick(e);
+      handleImageClick(e, processedItems, index);
       setTimeout(() => {
          e.target.src = originalSrc;
       }, 100);
@@ -138,7 +138,7 @@ export default function Carousel({ items }) {
             onTouchEnd={onTouchEnd}
             className="flex scroll-smooth snap-x snap-mandatory -mx-4 min-h-[320px] overflow-x-hidden"
          >
-            {processedItems.map((item) => (
+            {processedItems.map((item, index) => (
                <div
                   key={item.id}
                   className="snap-start shrink-0 w-full sm:w-[50%] lg:max-w-[33.33%] xl:w-[25%] px-4"
@@ -147,7 +147,7 @@ export default function Carousel({ items }) {
                      src={item.thumbnailSrc}
                      data-full-src={item.fullSrc}
                      alt={item.alt}
-                     onClick={handleCarouselImageClick}
+                     onClick={(e) => handleCarouselImageClick(e, index)}
                      className="w-full aspect-square object-cover cursor-pointer hover:opacity-80 transition"
                      loading="lazy"
                   />

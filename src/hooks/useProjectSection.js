@@ -4,7 +4,7 @@ export default function useProjectSection(slug) {
    const PAYLOAD_API = import.meta.env.VITE_PAYLOAD_API_URL;
 
    const { data, loading, error } = useFetchData(
-      `${PAYLOAD_API}/api/project-section?where[slug][equals]=${slug}&limit=1&depth=2`
+      `${PAYLOAD_API}/api/project-section?where[slug][equals]=${slug}&limit=1&depth=4`
    );
 
    const project = data?.docs?.[0];

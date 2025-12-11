@@ -32,14 +32,14 @@ export default function WorkDetail() {
    ;
 
    return (
-      <main className="w-full flex justify-center items-center py-20">
+      <main className="w-full flex justify-center items-center py-16 lg:py-20">
          <div className='px-4 lg:px-0 max-w-4xl w-full'>
             <div className="flex justify-center mb-12">
-               <div className="inline-grid grid-cols-[minmax(0,1fr)] min-h-[90vh]">
+               <div className="inline-grid grid-cols-[minmax(0,1fr)] lg:min-h-[90vh]">
                   <img
                      src={media.url}
                      alt={media.alt || `Work ${media.filename}`}
-                     className="h-[85vh] object-contain w-full"
+                     className="h-auto lg:h-[85vh] object-contain w-full"
                   />
                   {media.caption && (
                      <div className="text-base-content text-sm mt-2 text-right wrap-break-word">

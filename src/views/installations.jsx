@@ -28,6 +28,7 @@ export default function Installations() {
                galleryClassName='lg:mt-8'
                textClassName='pe-4'
                detailRoute="/installazioni"
+               useZoomModal={true}
             />
          )}
 
@@ -43,6 +44,7 @@ export default function Installations() {
                className='lg:pb-0'
                galleryClassName='lg:mt-8 lg:mb-8'
                detailRoute="/installazioni"
+               useZoomModal={true}
             />
          )}
       </main>

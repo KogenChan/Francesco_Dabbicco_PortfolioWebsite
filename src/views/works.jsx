@@ -33,7 +33,7 @@ export default function Works() {
                reverse={true}
                className='lg:pb-0'
                galleryClassName='lg:mt-8 lg:mb-8'
-               textClassName='pe-8'
+               textClassName='pe-0 lg:pe-8'
             />
          )}
 
@@ -48,7 +48,7 @@ export default function Works() {
                reverse={false}
                className='lg:pb-0'
                galleryClassName='lg:mt-8 lg:mb-8'
-               textClassName='ps-8'
+               textClassName='ps-0 lg:ps-8'
             />
          )}
 
@@ -63,7 +63,7 @@ export default function Works() {
                reverse={true}
                className='lg:pb-0'
                galleryClassName='lg:mt-8 lg:mb-8'
-               textClassName='pe-8'
+               textClassName='pe-0 lg:pe-8'
             />
          )}
       </>

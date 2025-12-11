@@ -13,7 +13,8 @@ export default function ProjectSection({
    galleryClassName = '',
    textClassName = '',
    bg = '',
-   detailRoute = ''
+   detailRoute = '',
+   useZoomModal = false  // Add this prop
 }) {
    return (
       <>
@@ -54,6 +55,7 @@ export default function ProjectSection({
                   content={galleryPhotos}
                   className={galleryClassName}
                   detailRoute={detailRoute || '/opere'}
+                  useZoomModal={useZoomModal}  // Pass the prop through
                />
             )}
          </section>

@@ -6,7 +6,7 @@ export default function useMediaItem(filename) {
    const actualFilename = filename ? filename.replace(/_/g, ' ') + '.webp' : null;
    
    const { data, loading, error } = useFetchData(
-      actualFilename ? `${PAYLOAD_API}/api/media?where[filename][equals]=${encodeURIComponent(actualFilename)}&depth=1` : null
+      actualFilename ? `${PAYLOAD_API}/api/media?where[filename][equals]=${encodeURIComponent(actualFilename)}&depth=2` : null
    );
 
    return { media: data?.docs?.[0], loading, error };
