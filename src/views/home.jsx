@@ -3,6 +3,9 @@ import ProjectSection from "../components/ProjectSection.jsx";
 import useFetchData from "../hooks/useFetchData.min.js";
 import useProjectSection from "../hooks/useProjectSection.min.js";
 import RichText from "../components/RichText.jsx";
+import { Link } from "react-router";
+import routes from "../routing/routes.min";
+import { div } from "framer-motion/client";
 
 export default function Home() {
    const PAYLOAD_API = import.meta.env.VITE_PAYLOAD_API_URL;
@@ -32,24 +35,26 @@ export default function Home() {
 
    return (
       <>
-         {hero && (
-            <main className="h-screen bg-primary container mx-auto flex flex-col lg:grid lg:grid-cols-2 items-stretch lg:py-16">
-               <figure className="lg:order-2 flex justify-center lg:justify-end overflow-hidden grow lg:h-auto">
-                  <img
-                     src={typeof hero.image === 'object' ? hero.image?.url : hero.image}
-                     alt={typeof hero.image === 'object' ? hero.image?.alt : "Hero Image"}
-                     className="w-full object-cover lg:w-auto lg:h-auto lg:object-contain pt-16 lg:pt-4"
-                  />
-               </figure>
+         <main className="h-screen bg-primary">
+            {hero && (
+               <div className="h-screen container mx-auto flex flex-col lg:grid lg:grid-cols-2 items-stretch lg:py-16">
+                  <figure className="lg:order-2 flex justify-center lg:justify-end overflow-hidden grow lg:h-auto">
+                     <img
+                        src={typeof hero.image === 'object' ? hero.image?.url : hero.image}
+                        alt={typeof hero.image === 'object' ? hero.image?.alt : "Hero Image"}
+                        className="w-full object-cover lg:w-auto lg:h-auto lg:object-contain pt-16 lg:pt-4"
+                     />
+                  </figure>
 
-               <div className="lg:order-1 flex flex-col justify-end lg:justify-center px-0 pt-6 lg:pt-0 pb-10 lg:pb-6">
-                  <h1 className="text-4xl pb-5 lg:pb-6">{hero.title}</h1>
-                  <div className="text-base lg:text-lg">
-                     <RichText content={hero.text} />
+                  <div className="lg:order-1 flex flex-col justify-end lg:justify-center px-0 pt-6 lg:pt-0 pb-10 lg:pb-6">
+                     <h1 className="text-4xl pb-5 lg:pb-6">{hero.title}</h1>
+                     <div className="text-base lg:text-lg">
+                        <RichText content={hero.text} />
+                     </div>
                   </div>
                </div>
-            </main>
-         )}
+            )}
+         </main>
 
          <section className="container mx-auto pb-8 lg:pb-14 overflow-x-hidden">
             <h2 className="text-4xl pb-6 pt-4">Opere recenti</h2>
@@ -61,15 +66,18 @@ export default function Home() {
          </section>
 
          {project && (
-            <ProjectSection
-               title={project.title}
-               subtitle={project.subtitle}
-               description={project.description}
-               imageSrc={typeof project.image === 'object' ? project.image?.url : project.image}
-               imageAlt={typeof project.image === 'object' ? project.image?.alt : ""}
-               galleryPhotos={project.gallery}
-               className="lg:mb-0 lg:pb-0"
-            />
+            <Link to={routes.installations}>
+               <ProjectSection
+                  title={project.title}
+                  subtitle={project.subtitle}
+                  description={project.description}
+                  imageSrc={typeof project.image === 'object' ? project.image?.url : project.image}
+                  imageAlt={typeof project.image === 'object' ? project.image?.alt : ""}
+                  galleryPhotos={project.gallery}
+                  className="lg:mb-0 lg:pb-0"
+                  textClassName='ps-8'
+               />
+            </Link>
          )}
       </>
    );

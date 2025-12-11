@@ -5,49 +5,47 @@ import "react-photo-album/styles.css";
 export default function Gallery({
    content,
    className,
-   baseUrl = 'http://localhost:3000',
    detailRoute = '/opere'
 }) {
    const navigate = useNavigate();
 
    const handlePhotoClick = (photo) => {
-      navigate(`${detailRoute}/${photo.key}`);
+      // If the photo has a mainWork reference, navigate to that instead
+      const targetSlug = photo.mainWorkSlug || photo.slug;
+      navigate(`${detailRoute}/${targetSlug}`);
    };
 
    let images = [];
 
    if (!content) {
       return null;
-   }
-
-   // If content is a gallery object with images array (from CMS relationship)
-   if (content.images && Array.isArray(content.images)) {
-      images = content.images;
-   }
-   // If content is already an array (legacy format or direct array)
-   else if (Array.isArray(content)) {
-      images = content;
+   } else {
+      images = content.images
    }
 
    // Transform to PhotoAlbum format
    const processedPhotos = images.map(item => {
-      // If it's already in the correct format (has src, width, height)
       if (item.src && item.width && item.height) {
          return item;
       }
 
-      // If it's coming from CMS (has image object)
       if (item.image) {
-         // Use thumbnail for gallery grid, full image for detail
          const thumbnailUrl = item.image.sizes?.card?.url || item.image.url;
+         
+         const formatFilename = (filename) => {
+            if (!filename) return null;
+            return filename.replace(/\.[^/.]+$/, '').replace(/\s+/g, '_');
+         };
 
          return {
-            src: `${baseUrl}${thumbnailUrl}`,
+            src: `${thumbnailUrl}`,
             alt: item.alt || item.image.alt || "",
             width: item.image.sizes?.card?.width || item.image.width || 800,
             height: item.image.sizes?.card?.height || item.image.height || 600,
-            key: item.image.id, // Use media ID instead of numeric key
-            fullImageUrl: `${baseUrl}${item.image.url}`, // Store full res URL for detail page
+            key: item.image.id,
+            slug: formatFilename(item.image.filename),
+            mainWorkSlug: item.image.mainWork?.filename ? formatFilename(item.image.mainWork.filename) : null,
+            fullImageUrl: `${item.image.url}`,
          };
       }
 

@@ -11,6 +11,7 @@ export default function ProjectSection({
    galleryPhotos = null,
    className = '',
    galleryClassName = '',
+   textClassName = '',
    bg = '',
    detailRoute = ''
 }) {
@@ -31,14 +32,13 @@ export default function ProjectSection({
                   <img
                      src={imageSrc}
                      alt={imageAlt}
-                     className="w-full object-cover lg:w-auto lg:h-[95%] lg:pt-0 "
+                     className="w-full object-cover lg:w-auto lg:pt-0 max-h-[90vh]"
                   />
                </figure>
 
                {/* # Text content */}
-               <div className={`flex flex-col justify-end lg:justify-center px-0 pt-6 lg:pt-0 pb-10 lg:pb-8 ${reverse ? 'lg:ps-0 lg:pe-4 lg:order-1' : 'lg:ps-4 lg:pe-0 lg:order-2'
-                  }`}>
-                  <div className="hidden lg:block pb-8">
+               <div className={`flex flex-col justify-end lg:justify-center px-0 pt-6 lg:pt-0 pb-10 lg:pb-8 ${reverse ? 'lg:order-1' : 'lg:order-2'} ${textClassName}`}>
+                  <div className="hidden lg:block pb-6">
                      <h1 className="text-4xl">{title}</h1>
                      {subtitle && <p className="text-xl text-gray-600 mt-2">{subtitle}</p>}
                   </div>

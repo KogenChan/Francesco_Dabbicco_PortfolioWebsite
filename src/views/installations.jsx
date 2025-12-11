@@ -26,6 +26,7 @@ export default function Installations() {
                reverse={true}
                className='lg:pb-0 pt-10 lg:pt-16'
                galleryClassName='lg:mt-8'
+               textClassName='pe-4'
                detailRoute="/installazioni"
             />
          )}
