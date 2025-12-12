@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function RichText({ content }) {
+export default function RichText({ content, className = '' }) {
    if (!content) return null;
 
    const renderText = (node) => {
@@ -137,7 +137,7 @@ export default function RichText({ content }) {
    };
 
    return (
-      <div className="rich-text leading-relaxed">
+      <div className={`rich-text ${className}`.trim()}>
          {content.root?.children?.map((node, i) => renderNode(node, i))}
       </div>
    );

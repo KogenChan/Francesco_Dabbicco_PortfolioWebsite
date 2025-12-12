@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { FaInstagram, FaLinkedin, FaSoundcloud } from 'react-icons/fa';
+import { FaInstagram } from 'react-icons/fa';
 import { MdOutlineAlternateEmail } from 'react-icons/md';
 
 export default function ContactForm() {
@@ -41,7 +41,7 @@ export default function ContactForm() {
                   <button
                      className="cursor-pointer me-1 pb-[1px]"
                      onClick={() => {
-                        navigator.clipboard.writeText('lucasimonecomposer@gmail.com');
+                        navigator.clipboard.writeText('francescodabbicco.art@gmail.com');
                         alert('Email copied to clipboard!');
                      }}
                   >
