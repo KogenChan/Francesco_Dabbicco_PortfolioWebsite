@@ -12,30 +12,6 @@ export default function Gallery({
    const navigate = useNavigate();
    const { handleImageClick, ZoomModal } = useImageZoom();
 
-   const handlePhotoClick = (photo, event, index) => {
-      if (useZoomModal) {
-         // Create a synthetic event with the full src from photo data
-         const syntheticEvent = {
-            preventDefault: () => { },
-            stopPropagation: () => { },
-            target: {
-               ...event.target,
-               src: photo.src,
-               dataset: {
-                  fullSrc: photo.fullSrc
-               },
-               getBoundingClientRect: () => event.target.getBoundingClientRect()
-            }
-         };
-         // Pass all processed photos for carousel navigation
-         handleImageClick(syntheticEvent, processedPhotos, index);
-      } else {
-         // For works: navigate to detail page
-         const targetSlug = photo.mainWorkSlug || photo.slug;
-         navigate(`${detailRoute}/${targetSlug}`);
-      }
-   };
-
    let images = [];
 
    if (!content) {
@@ -52,8 +28,18 @@ export default function Gallery({
 
       if (item.image) {
          const thumbnailUrl = item.image.sizes?.card?.url || item.image.url;
-         // Use full size for zoom modal (sizes.full or original url)
-         const fullUrl = item.image.sizes?.full?.url || item.image.url;
+         const fullUrl = item.image.sizes?.full?.url &&
+                        !item.image.sizes.full.url.endsWith('/null')
+                        ? item.image.sizes.full.url
+                        : item.image.url;
+
+         // DEBUG: Log to see what's happening
+         console.log('Processing image:', {
+            filename: item.image.filename,
+            hasFull: !!item.image.sizes?.full?.url,
+            fullUrl: fullUrl,
+            originalUrl: item.image.url
+         });
 
          const formatFilename = (filename) => {
             if (!filename) return null;
@@ -80,6 +66,32 @@ export default function Gallery({
    if (processedPhotos.length === 0) {
       return null;
    }
+
+   const handlePhotoClick = (photo, event, index) => {
+      if (useZoomModal) {
+         // Create a synthetic event with the full src from photo data
+         const syntheticEvent = {
+            preventDefault: () => { },
+            stopPropagation: () => { },
+            target: {
+               ...event.target,
+               src: photo.src,
+               dataset: {
+                  fullSrc: photo.fullSrc
+               },
+               getBoundingClientRect: () => event.target.getBoundingClientRect()
+            }
+         };
+         // Pass all processed photos for carousel navigation
+         handleImageClick(syntheticEvent, processedPhotos, index);
+      } else {
+         // For works: navigate to detail page
+         const targetSlug = photo.mainWorkSlug || photo.slug;
+         navigate(`${detailRoute}/${targetSlug}`);
+      }
+   };
+
+
 
    return (
       <article className="flex justify-center">
