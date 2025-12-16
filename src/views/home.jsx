@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import Carousel from "../components/Carousel";
 import ProjectSection from "../components/ProjectSection.jsx";
 import useFetchData from "../hooks/useFetchData.min.js";
@@ -5,17 +6,31 @@ import useProjectSection from "../hooks/useProjectSection.min.js";
 import RichText from "../components/RichText.jsx";
 import { Link } from "react-router";
 import routes from "../routing/routes.min";
-import { div } from "framer-motion/client";
 
 export default function Home() {
    const PAYLOAD_API = import.meta.env.VITE_PAYLOAD_API_URL;
+   const [isLandscape, setIsLandscape] = useState(window.innerWidth > window.innerHeight);
+
+   useEffect(() => {
+      const handleOrientationChange = () => {
+         setIsLandscape(window.innerWidth > window.innerHeight);
+      };
+
+      window.addEventListener('resize', handleOrientationChange);
+      window.addEventListener('orientationchange', handleOrientationChange);
+
+      return () => {
+         window.removeEventListener('resize', handleOrientationChange);
+         window.removeEventListener('orientationchange', handleOrientationChange);
+      };
+   }, []);
 
    const { data: heroData, error: heroError } = useFetchData(
       `${PAYLOAD_API}/api/homepage-hero?limit=1`
    );
 
    const { data: carouselData, error: carouselError } = useFetchData(
-      `${PAYLOAD_API}/api/carousel-item?sort=order&depth=1`  // Add depth=1
+      `${PAYLOAD_API}/api/carousel-item?sort=order&depth=1`
    );
 
    const { project, error: projectError } = useProjectSection('homepage');
@@ -33,20 +48,27 @@ export default function Home() {
    if (carouselError) return <p className="text-red-500">Carousel Error: {carouselError}</p>;
    if (projectError) return <p className="text-red-500">Project Error: {projectError}</p>;
 
+   // In landscape on mobile/tablet, behave like lg breakpoint
+   const isEffectiveLg = (isLandscape && window.innerWidth < 1024) || window.innerWidth >= 1024;
+
    return (
       <>
          <main className="h-screen bg-primary">
             {hero && (
-               <div className="h-screen container mx-auto flex flex-col lg:grid lg:grid-cols-2 items-stretch lg:py-16">
-                  <figure className="lg:order-2 flex justify-center lg:justify-end overflow-hidden grow lg:h-auto">
+               <div className={`h-screen container mx-auto flex flex-col items-stretch lg:py-16 ${isEffectiveLg ? 'grid grid-cols-2' : ''
+                  }`}>
+                  <figure className={`flex justify-center lg:justify-end overflow-hidden grow lg:h-auto ${isEffectiveLg ? 'order-2 justify-end' : ''
+                     }`}>
                      <img
                         src={typeof hero.image === 'object' ? hero.image?.url : hero.image}
                         alt={typeof hero.image === 'object' ? hero.image?.alt : "Hero Image"}
-                        className="w-full object-cover lg:w-auto lg:h-auto lg:object-contain pt-16 lg:pt-4"
+                        className={`w-full object-cover lg:w-auto lg:h-auto lg:object-contain lg:pt-4 ${isEffectiveLg ? 'w-auto h-auto object-contain pt-4' : 'pt-16'
+                           }`}
                      />
                   </figure>
 
-                  <div className="lg:order-1 flex flex-col justify-end lg:justify-center px-0 pt-6 lg:pt-0 pb-10 lg:pb-6">
+                  <div className={`flex flex-col justify-end lg:justify-center px-0 pt-6 lg:pt-0 pb-10 lg:pb-6 ${isEffectiveLg ? 'order-1 justify-center pt-0 pb-6' : ''
+                     }`}>
                      <h1 className="text-4xl pb-5 lg:pb-6">{hero.title}</h1>
                      <div className="text-base lg:text-lg">
                         <RichText content={hero.text} />
@@ -68,12 +90,7 @@ export default function Home() {
          {project && (
             <Link to={routes.installations}>
                <ProjectSection
-                  title={project.title}
-                  subtitle={project.subtitle}
-                  description={project.description}
-                  imageSrc={typeof project.image === 'object' ? project.image?.url : project.image}
-                  imageAlt={typeof project.image === 'object' ? project.image?.alt : ""}
-                  galleryPhotos={project.gallery}
+                  project={project}
                   className="lg:mb-0 lg:pb-0"
                   textClassName='ps-0 lg:ps-8'
                />
@@ -81,4 +98,4 @@ export default function Home() {
          )}
       </>
    );
-};
+}
