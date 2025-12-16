@@ -68,12 +68,7 @@ export default function Home() {
          {project && (
             <Link to={routes.installations}>
                <ProjectSection
-                  title={project.title}
-                  subtitle={project.subtitle}
-                  description={project.description}
-                  imageSrc={typeof project.image === 'object' ? project.image?.url : project.image}
-                  imageAlt={typeof project.image === 'object' ? project.image?.alt : ""}
-                  galleryPhotos={project.gallery}
+                  project={project}
                   className="lg:mb-0 lg:pb-0"
                   textClassName='ps-0 lg:ps-8'
                />

@@ -32,14 +32,7 @@ export default function Gallery({
                         !item.image.sizes.full.url.endsWith('/null')
                         ? item.image.sizes.full.url
                         : item.image.url;
-
-         // DEBUG: Log to see what's happening
-         console.log('Processing image:', {
-            filename: item.image.filename,
-            hasFull: !!item.image.sizes?.full?.url,
-            fullUrl: fullUrl,
-            originalUrl: item.image.url
-         });
+         ;
 
          const formatFilename = (filename) => {
             if (!filename) return null;
