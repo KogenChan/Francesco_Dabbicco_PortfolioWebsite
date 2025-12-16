@@ -152,32 +152,6 @@ html {
    box-shadow: 0px 6px 6px 0px #22222255;
 }
 
-.logo-link {
-   position: relative;
-   display: inline-block;
-}
-
-.logo-link .logo-hover {
-   position: absolute;
-   top: 0;
-   left: 0;
-   opacity: 0;
-   transition: opacity 0.2s ease;
-}
-
-.logo-main {
-   opacity: 1;
-   transition: opacity 0.2s ease;
-}
-
-.logo-link:hover .logo-hover {
-   opacity: 1;
-}
-
-.logo-link:hover .logo-main {
-   opacity: 0;
-}
-
 @media (width < 80rem) {
    .btn-top:active svg {
       background-color: #f1ac6a;

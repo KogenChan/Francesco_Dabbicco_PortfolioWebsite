@@ -39,7 +39,7 @@ export default function WorkDetail() {
                   <img
                      src={media.url}
                      alt={media.alt || `Work ${media.filename}`}
-                     className="h-auto lg:max-h-[85vh] object-contain w-full"
+                     className="h-auto lg:h-[85vh] object-contain w-full"
                   />
                   {media.caption && (
                      <div className="text-base-content text-sm mt-2 text-right wrap-break-word">
