@@ -19,22 +19,8 @@ export default function Navbar() {
             <div className="my-auto flex items-center justify-between">
                {/* Desktop Navigation */}
                <div className="flex">
-                  <Link to={routes.home} className="logo-link">
-                     <img
-                        src="../../public/media/logo.webp"
-                        alt="Francesco Dabbicco Logo"
-                        width={40}
-                        height={40}
-                        className="-ms-1 me-3 logo-main"
-                     />
-                     <img
-                        src="../../public/media/logo-hover.webp"
-                        alt=""
-                        width={40}
-                        height={40}
-                        className="-ms-1 me-3 logo-hover"
-                        aria-hidden="true"
-                     />
+                  <Link to={routes.home}>
+                     <img src="../../public/media/logo.webp" alt="Francesco Dabbicco Logo" width={40} height={40} className="-ms-1 me-3" />
                   </Link>
                   <div className="hidden md:flex items-center gap-4">
                      <Link to={routes.home} className="text-sm font-semibold hover:text-secondary-content transition-colors duration-100">Home</Link>

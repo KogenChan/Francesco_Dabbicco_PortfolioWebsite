@@ -1,5 +1,4 @@
 import { useNavigate } from 'react-router';
-import { useState, useEffect } from 'react';
 import PhotoAlbum from "react-photo-album";
 import "react-photo-album/styles.css";
 import useImageZoom from '../hooks/useImageZoom';
@@ -12,21 +11,6 @@ export default function Gallery({
 }) {
    const navigate = useNavigate();
    const { handleImageClick, ZoomModal } = useImageZoom();
-   const [isLandscape, setIsLandscape] = useState(window.innerWidth > window.innerHeight);
-
-   useEffect(() => {
-      const handleResize = () => {
-         setIsLandscape(window.innerWidth > window.innerHeight);
-      };
-
-      window.addEventListener('resize', handleResize);
-      window.addEventListener('orientationchange', handleResize);
-
-      return () => {
-         window.removeEventListener('resize', handleResize);
-         window.removeEventListener('orientationchange', handleResize);
-      };
-   }, []);
 
    let images = [];
 
@@ -45,9 +29,17 @@ export default function Gallery({
       if (item.image) {
          const thumbnailUrl = item.image.sizes?.card?.url || item.image.url;
          const fullUrl = item.image.sizes?.full?.url &&
-            !item.image.sizes.full.url.endsWith('/null')
-            ? item.image.sizes.full.url
-            : item.image.url;
+                        !item.image.sizes.full.url.endsWith('/null')
+                        ? item.image.sizes.full.url
+                        : item.image.url;
+
+         // DEBUG: Log to see what's happening
+         console.log('Processing image:', {
+            filename: item.image.filename,
+            hasFull: !!item.image.sizes?.full?.url,
+            fullUrl: fullUrl,
+            originalUrl: item.image.url
+         });
 
          const formatFilename = (filename) => {
             if (!filename) return null;
@@ -99,18 +91,7 @@ export default function Gallery({
       }
    };
 
-   // Calculate columns based on orientation and screen size
-   const getColumns = () => {
-      const width = window.innerWidth;
-      if (isLandscape && width < 1100) {
-         // Force more columns in landscape on mobile/tablet
-         return width < 600 ? 3 : 4;
-      }
-      // Default responsive behavior
-      if (width < 600) return 1;
-      if (width < 1100) return 2;
-      return 3;
-   };
+
 
    return (
       <article className="flex justify-center">
@@ -125,13 +106,12 @@ export default function Gallery({
          `}</style>
          <div className={`container w-full my-5 lg:my-16 ${className}`}>
             <PhotoAlbum
-               key={`${isLandscape}-${window.innerWidth}`}
                layout="rows"
                photos={processedPhotos}
                spacing={16}
                padding={0}
                targetRowHeight={300}
-               columns={getColumns()}
+               breakpoints={[300, 600, 1100]}
                onClick={({ photo, event, index }) => handlePhotoClick(photo, event, index)}
                renderPhoto={({ photo, wrapperStyle }) => (
                   <div style={wrapperStyle}>

@@ -9,24 +9,9 @@ export default function Carousel({ items }) {
    const [currentIndex, setCurrentIndex] = useState(0);
    const [itemsPerView, setItemsPerView] = useState(1);
    const [isAnimating, setIsAnimating] = useState(false);
-   const [isLandscape, setIsLandscape] = useState(window.innerWidth > window.innerHeight);
    const { handleImageClick, ZoomModal } = useImageZoom();
 
    const minSwipeDistance = 50;
-
-   useEffect(() => {
-      const handleOrientationChange = () => {
-         setIsLandscape(window.innerWidth > window.innerHeight);
-      };
-
-      window.addEventListener('resize', handleOrientationChange);
-      window.addEventListener('orientationchange', handleOrientationChange);
-
-      return () => {
-         window.removeEventListener('resize', handleOrientationChange);
-         window.removeEventListener('orientationchange', handleOrientationChange);
-      };
-   }, []);
 
    useEffect(() => {
       const calculateItemsPerView = () => {
@@ -43,7 +28,7 @@ export default function Carousel({ items }) {
       calculateItemsPerView();
       window.addEventListener("resize", calculateItemsPerView);
       return () => window.removeEventListener("resize", calculateItemsPerView);
-   }, [items, isLandscape]);
+   }, [items]);
 
    const maxIndex = Math.max(0, items.length - itemsPerView);
 
@@ -130,33 +115,20 @@ export default function Carousel({ items }) {
       }, 100);
    };
 
-   // Adjust column classes based on orientation
-   const getColumnClass = () => {
-      if (isLandscape && window.innerWidth < 1024) {
-         return "w-full sm:w-[33.33%] md:w-[25%]";
-      }
-      return "w-full sm:w-[50%] lg:max-w-[33.33%] xl:w-[25%]";
-   };
-
-   // Only show buttons on desktop (>= 768px) regardless of orientation
-   const showButtons = window.innerWidth >= 768 && !isLandscape;
-
    return (
       <div className="relative">
-         {showButtons && (
-            <div className="hidden md:block">
-               <CarouselButton
-                  direction="left"
-                  operation={scrollByCards}
-                  disabled={currentIndex === 0}
-               />
-               <CarouselButton
-                  direction="right"
-                  operation={scrollByCards}
-                  disabled={currentIndex === maxIndex}
-               />
-            </div>
-         )}
+         <div className="hidden md:block">
+            <CarouselButton
+               direction="left"
+               operation={scrollByCards}
+               disabled={currentIndex === 0}
+            />
+            <CarouselButton
+               direction="right"
+               operation={scrollByCards}
+               disabled={currentIndex === maxIndex}
+            />
+         </div>
 
          <div
             id="scroll-container"
@@ -164,12 +136,12 @@ export default function Carousel({ items }) {
             onTouchStart={onTouchStart}
             onTouchMove={onTouchMove}
             onTouchEnd={onTouchEnd}
-            className="flex scroll-smooth snap-x snap-mandatory -mx-4 overflow-x-hidden"
+            className="flex scroll-smooth snap-x snap-mandatory -mx-4 min-h-[320px] overflow-x-hidden"
          >
             {processedItems.map((item, index) => (
                <div
                   key={item.id}
-                  className={`snap-start shrink-0 ${getColumnClass()} px-4`}
+                  className="snap-start shrink-0 w-full sm:w-[50%] lg:max-w-[33.33%] xl:w-[25%] px-4"
                >
                   <img
                      src={item.thumbnailSrc}
@@ -201,4 +173,4 @@ export default function Carousel({ items }) {
          <ZoomModal />
       </div>
    );
-}
+};
