@@ -1,6 +1,6 @@
 import { Outlet } from "react-router";
 import Navbar from "../components/Navbar";
-import Footer from "../components/footer";
+import Footer from "../components/Footer";
 import BackToTopButton from "../components/TopButton";
 import { useGlobalLoading } from "../context/LoadingContext";
 import Loader from "../components/Loader";
