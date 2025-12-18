@@ -16,7 +16,7 @@ export default function About() {
       <>
          {/* STATEMENT SECTION */}
          {about?.statement && (
-            <section className="container mx-auto pt-24 pb-16 lg:pb-24 lg:pt-30">
+            <section className="container mx-auto pt-18 pb-16 lg:pb-24 lg:pt-30">
                <div className="mx-auto">
                   <div className="inline">
                      <h3 className="pb-3 text-lg">Artist's Statement</h3>

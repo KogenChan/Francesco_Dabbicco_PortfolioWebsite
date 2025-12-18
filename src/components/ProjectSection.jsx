@@ -61,7 +61,7 @@ export default function ProjectSection({
                </div>
 
                {/* # Image */}
-               <figure className={`flex overflow-hidden grow lg:h-auto lg:mx-0 ${reverse ? 'justify-end lg:order-2' : 'justify-start lg:order-1'
+               <figure className={`min-h-[50vh] lg:min-h-[88vh] flex overflow-hidden grow lg:h-auto lg:mx-0 ${reverse ? 'justify-end lg:order-2' : 'justify-start lg:order-1'
                   }`}>
                   {imageElement}
                </figure>
