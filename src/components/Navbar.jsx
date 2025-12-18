@@ -21,14 +21,14 @@ export default function Navbar() {
                <div className="flex">
                   <Link to={routes.home} className="logo-link">
                      <img
-                        src="../../public/media/logo.webp"
+                        src="/media/logo.webp"
                         alt="Francesco Dabbicco Logo"
                         width={40}
                         height={40}
                         className="-ms-1 me-3 logo-main"
                      />
                      <img
-                        src="../../public/media/logo-hover.webp"
+                        src="/media/logo-hover.webp"
                         alt=""
                         width={40}
                         height={40}
