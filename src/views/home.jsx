@@ -5,7 +5,6 @@ import useProjectSection from "../hooks/useProjectSection.min.js";
 import RichText from "../components/RichText.jsx";
 import { Link } from "react-router";
 import routes from "../routing/routes.min";
-import { div } from "framer-motion/client";
 
 export default function Home() {
    const PAYLOAD_API = import.meta.env.VITE_PAYLOAD_API_URL;
@@ -43,6 +42,8 @@ export default function Home() {
                         src={typeof hero.image === 'object' ? hero.image?.url : hero.image}
                         alt={typeof hero.image === 'object' ? hero.image?.alt : "Hero Image"}
                         className="w-full object-cover lg:w-auto lg:h-auto lg:object-contain pt-16 lg:pt-4"
+                        fetchpriority="high"
+                        loading="eager"
                      />
                   </figure>
 
