@@ -34,7 +34,7 @@ export default function ProjectSection({
       }
    };
 
-   const imageSrc = project.image?.url;
+   const imageSrc = project.image.sizes?.card?.url || project.image.url;
    const imageAlt = project.image?.alt || project.title;
    const bg = project.bg || '';
 
