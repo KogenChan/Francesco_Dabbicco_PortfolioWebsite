@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+   
+Sitemap: https://francescodabbiccoart.com/sitemap.xml
