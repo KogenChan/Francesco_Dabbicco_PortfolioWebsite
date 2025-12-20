@@ -40,7 +40,7 @@ export default function Home() {
                   <figure className="lg:order-2 flex justify-center lg:justify-end overflow-hidden grow lg:h-auto">
                      <img
                         src={typeof hero.image === 'object' ? hero.image?.url : hero.image}
-                        alt={typeof hero.image === 'object' ? hero.image?.alt : "Hero Image"}
+                        alt={typeof hero.image === 'object' ? hero.image?.alt : "Francesco Dabbicco"}
                         className="w-full object-cover lg:w-auto lg:h-auto lg:object-contain pt-16 lg:pt-4"
                         fetchpriority="high"
                         loading="eager"
