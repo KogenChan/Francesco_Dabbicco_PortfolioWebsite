@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import Carousel from "../components/Carousel";
 import ProjectSection from "../components/ProjectSection.jsx";
 import useFetchData from "../hooks/useFetchData.min.js";
@@ -8,16 +9,26 @@ import routes from "../routing/routes.min";
 
 export default function Home() {
    const PAYLOAD_API = import.meta.env.VITE_PAYLOAD_API_URL;
+   const [loadSecondary, setLoadSecondary] = useState(false);
 
    const { data: heroData, error: heroError } = useFetchData(
-      `${PAYLOAD_API}/api/homepage-hero?limit=1`
+      `${PAYLOAD_API}/api/homepage-hero?limit=1&depth=1`
    );
 
-   const { data: carouselData, error: carouselError } = useFetchData(
-      `${PAYLOAD_API}/api/carousel-item?sort=order&depth=1`  // Add depth=1
-   );
+   const carouselUrl = loadSecondary ? `${PAYLOAD_API}/api/carousel-item?sort=order&depth=1` : null;
+   const { data: carouselData, error: carouselError } = useFetchData(carouselUrl);
 
-   const { project, error: projectError } = useProjectSection('homepage');
+   const projectSlug = loadSecondary ? 'homepage' : null;
+   const { project, error: projectError } = useProjectSection(projectSlug);
+
+   useEffect(() => {
+      if (heroData?.docs?.[0]) {
+         const timer = setTimeout(() => {
+            setLoadSecondary(true);
+         }, 100);
+         return () => clearTimeout(timer);
+      }
+   }, [heroData]);
 
    const hero = heroData?.docs?.[0];
    const carouselItems = carouselData?.docs || [];
@@ -42,10 +53,11 @@ export default function Home() {
                         src={typeof hero.image === 'object' ? hero.image?.url : hero.image}
                         alt={typeof hero.image === 'object' ? hero.image?.alt : "Francesco Dabbicco"}
                         className="w-full object-cover lg:w-auto lg:h-auto lg:object-contain pt-16 lg:pt-4"
-                        fetchpriority="high"
+                        fetchPriority="high"
                         loading="eager"
                         width="800"
                         height="600"
+                        decoding="async"
                      />
                   </figure>
 
@@ -59,16 +71,20 @@ export default function Home() {
             )}
          </main>
 
-         <section className="container mx-auto pb-8 lg:pb-14 overflow-x-hidden">
-            <h2 className="text-4xl pb-6 pt-4">Opere recenti</h2>
-            {transformedCarouselItems.length > 0 ? (
-               <Carousel items={transformedCarouselItems} />
-            ) : (
-               <p>No carousel items found.</p>
-            )}
-         </section>
+         {/* Only render carousel section after secondary content loads */}
+         {loadSecondary && (
+            <section className="container mx-auto pb-8 lg:pb-14 overflow-x-hidden">
+               <h2 className="text-4xl pb-6 pt-4">Opere recenti</h2>
+               {transformedCarouselItems.length > 0 ? (
+                  <Carousel items={transformedCarouselItems} />
+               ) : (
+                  <p>No carousel items found.</p>
+               )}
+            </section>
+         )}
 
-         {project && (
+         {/* Only render project section after secondary content loads */}
+         {loadSecondary && project && (
             <Link to={routes.installations}>
                <ProjectSection
                   project={project}
@@ -79,4 +95,4 @@ export default function Home() {
          )}
       </>
    );
-};
+}

@@ -9,6 +9,12 @@ export default function useFetchData(url, options = {}) {
    const { startLoading, stopLoading } = useGlobalLoading();
 
    useEffect(() => {
+      // Don't fetch if url is null/undefined
+      if (!url) {
+         setLoading(false);
+         return;
+      }
+
       let active = true;
 
       async function fetchData() {

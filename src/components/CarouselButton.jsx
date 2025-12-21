@@ -1,5 +1,4 @@
-import { BiChevronLeft } from 'react-icons/bi';
-import { BiChevronRight } from 'react-icons/bi';
+import { BiChevronLeft, BiChevronRight } from 'react-icons/bi';
 
 export default function CarouselButton({ direction, operation, disabled }) {
    const scroll = (direction === `left` ? -1 : 1);

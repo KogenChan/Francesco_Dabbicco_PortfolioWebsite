@@ -3,11 +3,14 @@ import useFetchData from "./useFetchData.min.js";
 export default function useProjectSection(slug) {
    const PAYLOAD_API = import.meta.env.VITE_PAYLOAD_API_URL;
 
-   const { data, loading, error } = useFetchData(
-      `${PAYLOAD_API}/api/project-section?where[slug][equals]=${slug}&limit=1&depth=4`
-   );
+   // Only build URL if slug is provided
+   const url = slug 
+      ? `${PAYLOAD_API}/api/project-section?where[slug][equals]=${slug}&limit=1&depth=4`
+      : null;
+
+   const { data, loading, error } = useFetchData(url);
 
    const project = data?.docs?.[0];
 
    return { project, loading, error };
-};
+}

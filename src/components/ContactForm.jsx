@@ -1,10 +1,21 @@
-import { useState } from 'react';
-import { FaInstagram } from 'react-icons/fa';
-import { MdOutlineAlternateEmail } from 'react-icons/md';
+import { useState, useEffect } from 'react';
 
 export default function ContactForm() {
    const [result, setResult] = useState("");
    const [errors, setErrors] = useState({});
+   const [icons, setIcons] = useState({ FaInstagram: null, MdOutlineAlternateEmail: null });
+
+   // Lazy load icons only when component mounts
+   useEffect(() => {
+      Promise.all([
+         import('react-icons/fa').then(mod => mod.FaInstagram),
+         import('react-icons/md').then(mod => mod.MdOutlineAlternateEmail)
+      ]).then(([FaInstagram, MdOutlineAlternateEmail]) => {
+         setIcons({ FaInstagram, MdOutlineAlternateEmail });
+      });
+   }, []);
+
+   const { FaInstagram, MdOutlineAlternateEmail } = icons;
 
    const validateForm = (formData) => {
       const newErrors = {};
@@ -82,7 +93,9 @@ export default function ContactForm() {
                         alert('Email copied to clipboard!');
                      }}
                   >
-                     <MdOutlineAlternateEmail className="text-2xl pt-1 text-base-content hover:text-accent transition-colors duration-100" />
+                     {MdOutlineAlternateEmail && (
+                        <MdOutlineAlternateEmail className="text-2xl pt-1 text-base-content hover:text-accent transition-colors duration-100" />
+                     )}
                   </button>
                   <p className="text-2xl font-sans text-accent -mb-[1px] px-1">|</p>
                   <a
@@ -91,7 +104,9 @@ export default function ContactForm() {
                      href="https://www.instagram.com/francescodabbiccoart/"
                      rel="noopener noreferrer"
                   >
-                     <FaInstagram className="text-2xl pt-1 text-base-content hover:text-accent transition-colors duration-100" />
+                     {FaInstagram && (
+                        <FaInstagram className="text-2xl pt-1 text-base-content hover:text-accent transition-colors duration-100" />
+                     )}
                   </a>
                </div>
             </div>
