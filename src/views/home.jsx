@@ -16,17 +16,14 @@ export default function Home() {
    );
 
    const carouselUrl = loadSecondary ? `${PAYLOAD_API}/api/carousel-item?sort=order&depth=1` : null;
-   const { data: carouselData, error: carouselError } = useFetchData(carouselUrl);
+   const { data: carouselData, error: carouselError, loading: carouselLoading } = useFetchData(carouselUrl);
 
    const projectSlug = loadSecondary ? 'homepage' : null;
-   const { project, error: projectError } = useProjectSection(projectSlug);
+   const { project, error: projectError, loading: projectLoading } = useProjectSection(projectSlug);
 
    useEffect(() => {
       if (heroData?.docs?.[0]) {
-         const timer = setTimeout(() => {
-            setLoadSecondary(true);
-         }, 100);
-         return () => clearTimeout(timer);
+         setLoadSecondary(true);
       }
    }, [heroData]);
 
@@ -71,28 +68,32 @@ export default function Home() {
             )}
          </main>
 
-         {/* Only render carousel section after secondary content loads */}
          {loadSecondary && (
-            <section className="container mx-auto pb-8 lg:pb-14 overflow-x-hidden">
-               <h2 className="text-4xl pb-6 pt-4">Opere recenti</h2>
-               {transformedCarouselItems.length > 0 ? (
-                  <Carousel items={transformedCarouselItems} />
-               ) : (
-                  <p>No carousel items found.</p>
-               )}
-            </section>
-         )}
+            <>
+               <section className="container mx-auto pb-8 lg:pb-14 overflow-x-hidden">
+                  <h2 className="text-4xl pb-6 pt-4">Opere recenti</h2>
+                  {carouselLoading ? (
+                     <div className="h-64 bg-base-200 animate-pulse rounded-lg" />
+                  ) : transformedCarouselItems.length > 0 ? (
+                     <Carousel items={transformedCarouselItems} />
+                  ) : (
+                     <p>No carousel items found.</p>
+                  )}
+               </section>
 
-         {/* Only render project section after secondary content loads */}
-         {loadSecondary && project && (
-            <Link to={routes.installations}>
-               <ProjectSection
-                  project={project}
-                  className="lg:mb-0 lg:pb-0"
-                  textClassName='ps-0 lg:ps-8'
-               />
-            </Link>
+               {projectLoading ? (
+                  <div className="container mx-auto h-96 bg-base-200 animate-pulse rounded-lg mb-8" />
+               ) : project ? (
+                  <Link to={routes.installations}>
+                     <ProjectSection
+                        project={project}
+                        className="lg:mb-0 lg:pb-0"
+                        textClassName='ps-0 lg:ps-8'
+                     />
+                  </Link>
+               ) : null}
+            </>
          )}
       </>
    );
-}
+};
