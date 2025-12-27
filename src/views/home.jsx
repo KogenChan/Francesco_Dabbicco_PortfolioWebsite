@@ -27,6 +27,19 @@ export default function Home() {
       }
    }, [heroData]);
 
+   useEffect(() => {
+      const link = document.createElement('link');
+      link.rel = 'preload';
+      link.as = 'image';
+      link.href = 'https://r2images.narunaga.workers.dev/cover-1.webp';
+      link.fetchPriority = 'high';
+      document.head.appendChild(link);
+
+      return () => {
+         document.head.removeChild(link);
+      };
+   }, []);
+
    const hero = heroData?.docs?.[0];
    const carouselItems = carouselData?.docs || [];
 
