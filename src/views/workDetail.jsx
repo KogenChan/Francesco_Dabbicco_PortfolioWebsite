@@ -34,7 +34,7 @@ export default function WorkDetail() {
 
    return (
       <div>
-         <main className="w-full flex justify-center items-center pt-16 lg:pt-20 pb-10">
+         <main className="w-full flex justify-center items-center pt-16 lg:pt-20 pb-10 min-h-screen">
             <div className='px-4 lg:px-0 max-w-4xl w-full'>
                <div className="flex justify-center mb-12">
                   <div className="inline-grid grid-cols-[minmax(0,1fr)] lg:min-h-[90vh]">
