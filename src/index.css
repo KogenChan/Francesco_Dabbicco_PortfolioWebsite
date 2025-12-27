@@ -28,7 +28,16 @@
 
 :root {
    --font-multiplier: 1;
-   --color-secondary: #f7efd4;
+   --color-primary: #fff;
+   --color-secondary: #f5edd2;
+   --color-accent: #8b9fdd;
+   --color-accent-content: #6a7aaa;
+   --color-secondary-dark: #f1ac6a;
+   --color-neutral: #1f2937;
+   --color-base-100: #fff;
+   --color-base-200: #fff;
+   --color-base-300: #fff;
+   --color-base-content: #222;
 }
 
 html {
@@ -111,12 +120,10 @@ html {
    display: flex;
    align-items: center;
    height: 40px;
-   width: 156px;
+   width: 40px;
    overflow: hidden;
-   clip-path: inset(0 0 0 calc(100% - 44px) round 50px);
-   transition: all 0.3s ease-in-out;
-   border: 2px solid transparent;
-   background-color: transparent;
+   transition: width 0.3s ease, opacity 0.3s ease;
+   background-color: var(--color-accent-content);
 }
 
 .btn-top svg {
@@ -124,15 +131,51 @@ html {
    z-index: 40;
    right: 0px;
    flex-shrink: 0;
-   transition: right 0.3s ease-in-out, background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+   transition: transform 0.3s ease, background-color 0.3s ease, color 0.3s ease;
    outline: none;
 }
 
 .btn-top span {
-   opacity: 0;
-   z-index: 10;
+   opacity: 1;
    white-space: nowrap;
-   transition: opacity 0.1s ease-in-out 0.1s;
+   position: absolute;
+   right: 16px;
+}
+
+.btn-main {
+   background-color: var(--color-accent);
+   color: white;
+   padding: 6px 20px;
+   border-radius: 50px;
+   cursor: pointer;
+   position: relative;
+   overflow: hidden;
+}
+
+.btn-main::before {
+   width: 100%;
+   height: 100%;
+   background: #6A7AAA;
+   background: linear-gradient(120deg, rgba(255, 255, 255, 0) 39%, var(--color-secondary-dark) 40%, var(--color-secondary-dark) 75%, rgba(255, 255, 255, 0) 76%);
+   content: '';
+   position: absolute;
+   top: 0px;
+   transform: translateX(-140%);
+   z-index: 25;
+   transition: transform 0.5s ease;
+}
+
+.btn-main::after {
+   width: 150%;
+   height: 100%;
+   background: #6A7AAA;
+   background: linear-gradient(120deg, var(--color-accent-content) 69%, rgba(255, 255, 255, 0) 70%);
+   content: '';
+   position: absolute;
+   top: 0px;
+   transform: translateX(-135%);
+   z-index: 0;
+   transition: transform 0.5s ease;
 }
 
 .react-photo-album--image {
@@ -180,7 +223,7 @@ html {
 
 @media (width < 80rem) {
    .btn-top:active svg {
-      background-color: #f1ac6a;
+      background-color: var(--color-secondary-dark);
       color: #6a7aaa;
    }
 }
@@ -192,14 +235,13 @@ html {
 
    .btn-top:hover {
       cursor: pointer;
-      clip-path: inset(0 0 0 0 round 50px);
-      border-color: #222;
-      background-color: white;
+      width: 164px;
+      background-color: var(--color-accent-content);
    }
 
    .btn-top:hover svg {
-      right: calc(100% - 40px);
-      background-color: #f1ac6a;
+      transform: translateX(-124px);
+      background-color: var(--color-secondary-dark);
       color: #fff;
       outline: none;
    }
@@ -207,6 +249,14 @@ html {
    .btn-top:hover span {
       opacity: 1;
       transition: opacity 0.1s ease-in-out 0.1s;
+   }
+
+   .btn-main:hover::after {
+      transform: translateX(-35%);
+   }
+
+   .btn-main:hover::before {
+      transform: translateX(20%);
    }
 
    .detailImg {
@@ -233,7 +283,7 @@ html {
    content: "";
    position: absolute;
    inset: -150% -150%;
-   background: repeating-conic-gradient(from 30deg, #6a7aaa 0 60deg, #8b9fdd 0 120deg, #f1ac6a 0 180deg);
+   background: repeating-conic-gradient(from 30deg, #6a7aaa 0 60deg, #8b9fdd 0 120deg, var(--color-secondary-dark) 0 180deg);
    animation: rotate 3s infinite linear;
    animation-direction: reverse;
 }

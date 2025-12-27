@@ -19,26 +19,26 @@ export default function ContactForm() {
 
    const validateForm = (formData) => {
       const newErrors = {};
-      
+
       if (!formData.get('name')?.trim()) {
          newErrors.name = 'Il nome è obbligatorio';
       }
-      
+
       if (!formData.get('surname')?.trim()) {
          newErrors.surname = 'Il cognome è obbligatorio';
       }
-      
+
       const email = formData.get('email')?.trim();
       if (!email) {
          newErrors.email = "L'email è obbligatoria";
       } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
          newErrors.email = "L'email non è valida";
       }
-      
+
       if (!formData.get('message')?.trim()) {
          newErrors.message = 'Il messaggio è obbligatorio';
       }
-      
+
       return newErrors;
    };
 
@@ -46,15 +46,15 @@ export default function ContactForm() {
       event.preventDefault();
       setErrors({});
       setResult("");
-      
+
       const formData = new FormData(event.target);
       const validationErrors = validateForm(formData);
-      
+
       if (Object.keys(validationErrors).length > 0) {
          setErrors(validationErrors);
          return;
       }
-      
+
       setResult("Invio in corso...");
       formData.append("access_key", "3ed96716-a9c5-48ec-bfc8-e751a616231f");
 
@@ -180,7 +180,9 @@ export default function ContactForm() {
                      </span>
                   )}
                   <div />
-                  <button type="submit" className="bg-accent py-1.5 px-5 rounded-full text-white hover:opacity-80 transition-opacity duration-100 cursor-pointer">Invia</button>
+                  <button type="submit" className="btn-main z-10">
+                     <p className='z-20 relative'>Invia</p>
+                  </button>
                </div>
             </form>
          </div>

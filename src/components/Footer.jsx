@@ -7,7 +7,7 @@ export default function Footer() {
          © 2025 Copyright:
          <Link 
             className='pl-1 text-base-content hover:underline' 
-            to={routes.home}
+            to={routes.about}
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
          >
             Francesco Dabbicco
