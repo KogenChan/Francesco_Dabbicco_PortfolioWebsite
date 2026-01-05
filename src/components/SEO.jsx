@@ -1,31 +1,30 @@
 import { useEffect } from "react";
 import { useLocation, useParams } from "react-router";
-import canonicalMap from "../canonicalMap.js"
 
 const SITE_URL = "https://francescodabbiccoart.com";
 
 export default function SEO() {
-   const { pathname } = useLocation();
-   const params = useParams();
+  const { pathname } = useLocation();
+  const params = useParams();
 
-   useEffect(() => {
-      let link = document.querySelector("link[rel='canonical']");
-      if (!link) {
-         link = document.createElement("link");
-         link.setAttribute("rel", "canonical");
-         document.head.appendChild(link);
-      }
+  useEffect(() => {
+    let link = document.querySelector("link[rel='canonical']");
+    if (!link) {
+      link = document.createElement("link");
+      link.setAttribute("rel", "canonical");
+      document.head.appendChild(link);
+    }
 
-      let canonical = canonicalMap[pathname] || `${SITE_URL}${pathname}`;
+    let canonical = `${SITE_URL}${pathname}`;
 
-      if (pathname.startsWith("/opere/") && params.itemName) {
-         canonical = `${SITE_URL}/opere/${params.itemName}`;
-      } else if (pathname.startsWith("/installazioni/") && params.itemName) {
-         canonical = `${SITE_URL}/installazioni/${params.itemName}`;
-      }
+    if (pathname.startsWith("/opere/") && params.itemName) {
+      canonical = `${SITE_URL}/opere/${params.itemName}`;
+    } else if (pathname.startsWith("/installazioni/") && params.itemName) {
+      canonical = `${SITE_URL}/installazioni/${params.itemName}`;
+    }
 
-      link.setAttribute("href", canonical);
-   }, [pathname, params]);
+    link.setAttribute("href", canonical);
+  }, [pathname, params]);
 
-   return null;
+  return null;
 };
