@@ -1,10 +1,12 @@
 import { useEffect } from "react";
-import { useLocation } from "react-router";
+import { useLocation, useParams } from "react-router";
+import canonicalMap from "../canonicalMap.js"
 
 const SITE_URL = "https://francescodabbiccoart.com";
 
 export default function SEO() {
    const { pathname } = useLocation();
+   const params = useParams();
 
    useEffect(() => {
       let link = document.querySelector("link[rel='canonical']");
@@ -14,9 +16,16 @@ export default function SEO() {
          document.head.appendChild(link);
       }
 
-      const canonical = `${SITE_URL}${window.location.pathname}`;
+      let canonical = canonicalMap[pathname] || `${SITE_URL}${pathname}`;
+
+      if (pathname.startsWith("/opere/") && params.itemName) {
+         canonical = `${SITE_URL}/opere/${params.itemName}`;
+      } else if (pathname.startsWith("/installazioni/") && params.itemName) {
+         canonical = `${SITE_URL}/installazioni/${params.itemName}`;
+      }
+
       link.setAttribute("href", canonical);
-   }, [pathname]);
+   }, [pathname, params]);
 
    return null;
-}
+};
