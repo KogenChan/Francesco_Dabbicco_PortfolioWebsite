@@ -11,7 +11,6 @@ const InstallationDetail = lazy(() => import("../views/installationDetail"));
 const Contacts = lazy(() => import("../views/contacts"));
 const About = lazy(() => import("../views/about"));
 
-// Simple loading fallback
 const LoadingFallback = () => (
    <div className="flex items-center justify-center min-h-screen">
       <div className="text-lg">Loading...</div>

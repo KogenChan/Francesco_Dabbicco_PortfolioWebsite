@@ -81,13 +81,13 @@ html {
 @font-face {
    font-family: 'Quarion';
    font-display: swap;
-   src: url(../public/fonts/Quarion-Book.ttf) format('truetype');
+   src: url(/fonts/Quarion-Book.ttf) format('truetype');
 }
 
 @font-face {
    font-family: 'QuarionItalic';
    font-display: swap;
-   src: url(../public/fonts/Quarion-BookItalic.ttf) format('truetype');
+   src: url(/fonts/Quarion-BookItalic.ttf) format('truetype');
 }
 
 @layer base {
