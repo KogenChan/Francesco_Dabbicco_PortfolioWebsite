@@ -2,8 +2,8 @@
   "redirects": [
     {
       "source": "/(.*)",
-      "has": [{ "type": "host", "value": "www.francescodabbiccoart.com" }],
-      "destination": "https://francescodabbiccoart.com/$1",
+      "has": [{ "type": "host", "value": "francescodabbiccoart.com" }],
+      "destination": "https://www.francescodabbiccoart.com/$1",
       "permanent": true
     }
   ],

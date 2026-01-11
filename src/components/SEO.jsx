@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useLocation, useParams } from "react-router";
 
-const SITE_URL = "https://francescodabbiccoart.com";
+const SITE_URL = "https://www.francescodabbiccoart.com";
 
 export default function SEO() {
   const { pathname } = useLocation();

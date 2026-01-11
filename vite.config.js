@@ -10,7 +10,7 @@ export default defineConfig({
       createHtmlPlugin({
       inject: {
         injectData: {
-          canonical: 'https://francescodabbiccoart.com/'
+          canonical: 'https://www.francescodabbiccoart.com/'
         }
       }
     })
