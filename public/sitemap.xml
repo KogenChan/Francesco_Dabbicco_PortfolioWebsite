@@ -9,33 +9,33 @@
 <!-- Home page -->
   <url>
     <loc>https://www.francescodabbiccoart.com/</loc>
-    <lastmod>2026-01-05T00:00:00+00:00</lastmod>
+    <lastmod>2026-01-11T00:00:00+00:00</lastmod>
     <priority>1.0</priority>
   </url>
 
   <!-- Static pages -->
   <url>
     <loc>https://www.francescodabbiccoart.com/about</loc>
-    <lastmod>2026-01-05T00:00:00+00:00</lastmod>
+    <lastmod>2026-01-11T00:00:00+00:00</lastmod>
     <priority>0.8</priority>
   </url>
 
   <url>
     <loc>https://www.francescodabbiccoart.com/contatti</loc>
-    <lastmod>2026-01-05T00:00:00+00:00</lastmod>
+    <lastmod>2026-01-11T00:00:00+00:00</lastmod>
     <priority>0.8</priority>
   </url>
 
   <!-- Collection pages -->
   <url>
     <loc>https://www.francescodabbiccoart.com/opere</loc>
-    <lastmod>2026-01-05T00:00:00+00:00</lastmod>
+    <lastmod>2026-01-11T00:00:00+00:00</lastmod>
     <priority>0.9</priority>
   </url>
 
   <url>
     <loc>https://www.francescodabbiccoart.com/installazioni</loc>
-    <lastmod>2026-01-05T00:00:00+00:00</lastmod>
+    <lastmod>2026-01-11T00:00:00+00:00</lastmod>
     <priority>0.9</priority>
   </url>
 
