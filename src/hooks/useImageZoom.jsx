@@ -146,7 +146,7 @@ export default function useImageZoom(onZoomedImageClick = null) {
                      src={currentImgSrc}
                      alt=""
                      onClick={handleZoomedImageClickInternal}
-                     className={`max-w-full max-h-full w-auto h-auto object-contain select-none transition-opacity duration-200 ${onZoomedImageClick ? 'cursor-pointer hover:opacity-80' : ''
+                     className={`max-w-full max-h-full w-auto h-auto object-contain select-none transition-opacity duration-200 ${onZoomedImageClick ? 'cursor-pointer' : ''
                         }`}
                      draggable="false"
                      style={{

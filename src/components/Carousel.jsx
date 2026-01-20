@@ -173,7 +173,7 @@ export default function Carousel({ items }) {
                      data-full-src={item.fullSrc}
                      alt={item.alt}
                      onClick={(e) => handleCarouselImageClick(e, index)}
-                     className="w-full aspect-square object-cover cursor-pointer transition"
+                     className="w-full aspect-square object-cover cursor-pointer hover:opacity-80 transition"
                      loading="lazy"
                   />
                </div>
