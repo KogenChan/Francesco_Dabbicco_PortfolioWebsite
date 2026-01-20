@@ -2,7 +2,7 @@ import { useState, useCallback, useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 import { IoClose, IoChevronBack, IoChevronForward } from "react-icons/io5";
 
-export default function useImageZoom() {
+export default function useImageZoom(onZoomedImageClick = null) {
    const [isZoomed, setIsZoomed] = useState(false);
    const [currentImgSrc, setCurrentImgSrc] = useState(null);
    const [currentIndex, setCurrentIndex] = useState(0);
@@ -22,7 +22,7 @@ export default function useImageZoom() {
       setCurrentImgSrc(fullSrc);
       setCurrentIndex(index);
       setIsZoomed(true);
-      hasAnimated.current = false; // Reset animation flag when opening
+      hasAnimated.current = false;
       document.body.classList.add("overflow-hidden");
    }, []);
 
@@ -49,6 +49,13 @@ export default function useImageZoom() {
       });
    }, [images]);
 
+   const handleZoomedImageClickInternal = useCallback(() => {
+      if (onZoomedImageClick && images[currentIndex]) {
+         closeZoom(); // Close modal before navigation
+         onZoomedImageClick(images[currentIndex]);
+      }
+   }, [onZoomedImageClick, images, currentIndex, closeZoom]);
+
    // ————— Touch Swipe —————
    const onTouchStart = (e) => {
       touchStartX.current = e.touches[0].clientX;
@@ -62,7 +69,6 @@ export default function useImageZoom() {
       const deltaX = e.touches[0].clientX - touchStartX.current;
       const deltaY = e.touches[0].clientY - touchStartY.current;
 
-      // If horizontal movement is greater than vertical, it's a swipe
       if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 10) {
          isSwiping.current = true;
       }
@@ -88,7 +94,6 @@ export default function useImageZoom() {
    };
 
    const handleOverlayClick = (e) => {
-      // Only close if we didn't just finish swiping
       if (!isSwiping.current) {
          closeZoom();
       }
@@ -140,7 +145,9 @@ export default function useImageZoom() {
                   <img
                      src={currentImgSrc}
                      alt=""
-                     className="max-w-full max-h-full w-auto h-auto object-contain select-none transition-opacity duration-200"
+                     onClick={handleZoomedImageClickInternal}
+                     className={`max-w-full max-h-full w-auto h-auto object-contain select-none transition-opacity duration-200 ${onZoomedImageClick ? 'cursor-pointer hover:opacity-80' : ''
+                        }`}
                      draggable="false"
                      style={{
                         maxWidth: '100%',
@@ -153,24 +160,24 @@ export default function useImageZoom() {
                      {currentIndex + 1} / {images.length}
                   </div>
 
-                  {/* Prev Button — hidden until xl */}
+                  {/* Prev Button — hidden until lg */}
                   <button
                      onClick={(e) => {
                         e.stopPropagation();
                         goPrev();
                      }}
-                     className="hidden xl:flex absolute left-2 top-1/2 -translate-y-1/2 z-70 bg-white/60 hover:bg-white/80 transition-colors rounded-full py-[8px] ps-[7px] pe-[9px] backdrop-blur-[1px] cursor-pointer"
+                     className="hidden lg:flex absolute left-2 top-1/2 -translate-y-1/2 z-70 bg-white/60 hover:bg-white/80 transition-colors rounded-full py-[8px] ps-[7px] pe-[9px] backdrop-blur-[1px] cursor-pointer"
                   >
                      <IoChevronBack size={28} />
                   </button>
 
-                  {/* Next Button — hidden until xl */}
+                  {/* Next Button — hidden until lg */}
                   <button
                      onClick={(e) => {
                         e.stopPropagation();
                         goNext();
                      }}
-                     className="hidden xl:flex absolute right-2 top-1/2 -translate-y-1/2 z-70 bg-white/60 hover:bg-white/80 transition-colors rounded-full py-[8px] pe-[7px] ps-[9px] backdrop-blur-[1px] cursor-pointer"
+                     className="hidden lg:flex absolute right-2 top-1/2 -translate-y-1/2 z-70 bg-white/60 hover:bg-white/80 transition-colors rounded-full py-[8px] pe-[7px] ps-[9px] backdrop-blur-[1px] cursor-pointer"
                   >
                      <IoChevronForward size={28} />
                   </button>
@@ -203,4 +210,4 @@ export default function useImageZoom() {
    };
 
    return { handleImageClick, ZoomModal };
-};
+}

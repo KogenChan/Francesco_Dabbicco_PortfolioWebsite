@@ -1,15 +1,32 @@
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect, useCallback } from "react";
+import { useNavigate } from "react-router";
 import CarouselButton from "./CarouselButton";
 import useImageZoom from "../hooks/useImageZoom";
 
 export default function Carousel({ items }) {
+   const navigate = useNavigate();
    const scrollRef = useRef(null);
    const [touchStart, setTouchStart] = useState(0);
    const [touchEnd, setTouchEnd] = useState(0);
    const [currentIndex, setCurrentIndex] = useState(0);
    const [itemsPerView, setItemsPerView] = useState(1);
    const [isAnimating, setIsAnimating] = useState(false);
-   const { handleImageClick, ZoomModal } = useImageZoom();
+
+   const formatFilename = (filename) => {
+      if (!filename) return null;
+      return filename.replace(/\.[^/.]+$/, '').replace(/\s+/g, '_');
+   };
+
+   const handleZoomedImageClick = useCallback((item) => {
+      // Check for mainWorkSlug first, then regular slug
+      const targetSlug = item.mainWorkSlug || item.slug;
+
+      if (targetSlug) {
+         navigate(`/opere/${targetSlug}`);
+      }
+   }, [navigate]);
+
+   const { handleImageClick, ZoomModal } = useImageZoom(handleZoomedImageClick);
 
    const minSwipeDistance = 50;
 
@@ -89,12 +106,20 @@ export default function Carousel({ items }) {
    const processedItems = items.map((item) => {
       if (item.image && typeof item.image === 'object') {
          const thumbnailUrl = item.image.sizes?.card?.url || item.image.sizes?.thumbnail?.url || item.image.url;
-         const fullUrl = item.image.sizes?.card?.url || item.image.sizes?.thumbnail?.url || item.image.url;;
+         const fullUrl = item.image.sizes?.full?.url &&
+            !item.image.sizes.full.url.endsWith('/null')
+            ? item.image.sizes.full.url
+            : item.image.url;
+
+         const slug = formatFilename(item.image.filename);
+         const mainWorkSlug = item.image.mainWork?.filename ? formatFilename(item.image.mainWork.filename) : null;
 
          return {
             ...item,
             thumbnailSrc: thumbnailUrl,
             fullSrc: fullUrl,
+            slug: slug,
+            mainWorkSlug: mainWorkSlug,
          };
       }
 
@@ -148,7 +173,7 @@ export default function Carousel({ items }) {
                      data-full-src={item.fullSrc}
                      alt={item.alt}
                      onClick={(e) => handleCarouselImageClick(e, index)}
-                     className="w-full aspect-square object-cover cursor-pointer hover:opacity-80 transition"
+                     className="w-full aspect-square object-cover cursor-pointer transition"
                      loading="lazy"
                   />
                </div>
@@ -173,4 +198,4 @@ export default function Carousel({ items }) {
          <ZoomModal />
       </div>
    );
-};
+}

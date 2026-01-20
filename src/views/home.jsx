@@ -15,7 +15,7 @@ export default function Home() {
       `${PAYLOAD_API}/api/homepage-hero?limit=1&depth=1`
    );
 
-   const carouselUrl = loadSecondary ? `${PAYLOAD_API}/api/carousel-item?sort=order&depth=1` : null;
+   const carouselUrl = loadSecondary ? `${PAYLOAD_API}/api/carousel-item?sort=order&depth=2` : null;
    const { data: carouselData, error: carouselError, loading: carouselLoading } = useFetchData(carouselUrl);
 
    const projectSlug = loadSecondary ? 'homepage' : null;

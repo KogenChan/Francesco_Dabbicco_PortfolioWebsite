@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router';
+import { useCallback } from 'react';
 import PhotoAlbum from "react-photo-album";
 import "react-photo-album/styles.css";
 import useImageZoom from '../hooks/useImageZoom';
@@ -10,7 +11,17 @@ export default function Gallery({
    useZoomModal = false
 }) {
    const navigate = useNavigate();
-   const { handleImageClick, ZoomModal } = useImageZoom();
+   
+   const handleZoomedImageClick = useCallback((photo) => {
+      // Only navigate if NOT using zoom modal (gallery images navigate directly)
+      // When using zoom modal, this won't be called
+      if (!useZoomModal) {
+         const targetSlug = photo.mainWorkSlug || photo.slug;
+         navigate(`${detailRoute}/${targetSlug}`);
+      }
+   }, [useZoomModal, detailRoute, navigate]);
+
+   const { handleImageClick, ZoomModal } = useImageZoom(useZoomModal ? null : handleZoomedImageClick);
 
    let images = [];
 
@@ -32,12 +43,14 @@ export default function Gallery({
                         !item.image.sizes.full.url.endsWith('/null')
                         ? item.image.sizes.full.url
                         : item.image.url;
-         ;
 
          const formatFilename = (filename) => {
             if (!filename) return null;
             return filename.replace(/\.[^/.]+$/, '').replace(/\s+/g, '_');
          };
+
+         const slug = formatFilename(item.image.filename);
+         const mainWorkSlug = item.image.mainWork?.filename ? formatFilename(item.image.mainWork.filename) : null;
 
          return {
             src: thumbnailUrl,
@@ -46,9 +59,8 @@ export default function Gallery({
             width: item.image.sizes?.card?.width || item.image.width || 800,
             height: item.image.sizes?.card?.height || item.image.height || 600,
             key: item.image.id,
-            slug: formatFilename(item.image.filename),
-            mainWorkSlug: item.image.mainWork?.filename ? formatFilename(item.image.mainWork.filename) : null,
-            test: item,
+            slug: slug,
+            mainWorkSlug: mainWorkSlug,
          };
       }
 
@@ -83,8 +95,6 @@ export default function Gallery({
          navigate(`${detailRoute}/${targetSlug}`);
       }
    };
-
-
 
    return (
       <article className="flex justify-center">
@@ -123,4 +133,4 @@ export default function Gallery({
          {useZoomModal && <ZoomModal />}
       </article>
    );
-};
+}
