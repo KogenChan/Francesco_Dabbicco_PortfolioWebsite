@@ -4,8 +4,9 @@ import useProjectSection from '../hooks/useProjectSection.min.js';
 export default function Installations() {
    const { project: project1, error: error1 } = useProjectSection('installazioni_1');
    const { project: project2, error: error2 } = useProjectSection('installazioni_2');
+   const { project: project3, error: error3 } = useProjectSection('installazioni_3');
 
-   if (error1 || error2) {
+   if (error1 || error2 || error3) {
       return (
          <div className="flex justify-center my-20">
             <div>Error loading content</div>
@@ -30,6 +31,18 @@ export default function Installations() {
          {project2 && (
             <ProjectSection
                project={project2}
+               reverse={false}
+               className='lg:pb-0'
+               galleryClassName='lg:mt-8 lg:mb-8'
+               textClassName='ps-0 lg:ps-8'
+               detailRoute="/installazioni"
+               useZoomModal={true}
+            />
+         )}
+
+         {project3 && (
+            <ProjectSection
+               project={project3}
                reverse={false}
                className='lg:pb-0'
                galleryClassName='lg:mt-8 lg:mb-8'
