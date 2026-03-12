@@ -1,3 +1,4 @@
+import useHashScroll from '../hooks/useHashScroll.min.js'
 import ProjectSection from '../components/ProjectSection.jsx';
 import useProjectSection from '../hooks/useProjectSection.min.js';
 
@@ -5,6 +6,8 @@ export default function Installations() {
    const { project: project1, error: error1 } = useProjectSection('installazioni_1');
    const { project: project2, error: error2 } = useProjectSection('installazioni_2');
    const { project: project3, error: error3 } = useProjectSection('installazioni_3');
+
+   useHashScroll();
 
    if (error1 || error2 || error3) {
       return (
@@ -27,7 +30,6 @@ export default function Installations() {
                useZoomModal={true}
             />
          )}
-
          {project2 && (
             <ProjectSection
                project={project2}
@@ -39,7 +41,6 @@ export default function Installations() {
                useZoomModal={true}
             />
          )}
-
          {project3 && (
             <ProjectSection
                project={project3}

@@ -2,12 +2,15 @@ import Gallery from '../components/Gallery.jsx';
 import ProjectSection from '../components/ProjectSection.jsx';
 import useProjectSection from '../hooks/useProjectSection.min.js';
 import useGallery from '../hooks/useGallery.min.js';
+import useHashScroll from '../hooks/useHashScroll.min.js'
 
 export default function Works() {
    const { gallery, error: galleryError } = useGallery('main');
    const { project: project1, error: project1Error } = useProjectSection('opere_1');
    const { project: project2, error: project2Error } = useProjectSection('opere_2');
    const { project: project3, error: project3Error } = useProjectSection('opere_3');
+
+   useHashScroll();
 
    if (galleryError || project1Error || project2Error || project3Error) {
       return (

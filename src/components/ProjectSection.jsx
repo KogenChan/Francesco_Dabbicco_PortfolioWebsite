@@ -50,7 +50,7 @@ export default function ProjectSection({
 
    return (
       <>
-         <section className={`bg-${bg}`}>
+         <section className={`bg-${bg}`} id={project.slug}>
             <article className={`bg-none container mx-auto flex flex-col items-stretch lg:py-16 ${reverse ? 'lg:grid lg:grid-cols-2 lg:flex-col-reverse' : 'lg:grid lg:grid-cols-2'
                } ${className}`}>
 

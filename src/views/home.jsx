@@ -21,6 +21,8 @@ export default function Home() {
    const projectSlug = loadSecondary ? 'homepage' : null;
    const { project, error: projectError, loading: projectLoading } = useProjectSection(projectSlug);
 
+   project && console.log(project.mainProject.destination)
+
    useEffect(() => {
       if (heroData?.docs?.[0]) {
          setLoadSecondary(true);
@@ -97,7 +99,7 @@ export default function Home() {
                {projectLoading ? (
                   <div className="container mx-auto h-96 bg-base-200 animate-pulse rounded-lg mb-8" />
                ) : project ? (
-                  <Link to={routes.installations}>
+                  <Link to={`${project.mainProject.destination === 'works' ? routes.works : routes.installations}#${project.mainProject.slug}`}>
                      <ProjectSection
                         project={project}
                         className="lg:mb-0 lg:pb-0"
