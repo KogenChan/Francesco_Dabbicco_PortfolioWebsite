@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 
 export default function ContactForm() {
    const [result, setResult] = useState("");
    const [errors, setErrors] = useState({});
    const [icons, setIcons] = useState({ FaInstagram: null, MdOutlineAlternateEmail: null });
+   const { t } = useTranslation();
 
    // Lazy load icons only when component mounts
    useEffect(() => {
@@ -21,22 +23,22 @@ export default function ContactForm() {
       const newErrors = {};
 
       if (!formData.get('name')?.trim()) {
-         newErrors.name = 'Il nome è obbligatorio';
+         newErrors.name = t('contact.validation.nameRequired');
       }
 
       if (!formData.get('surname')?.trim()) {
-         newErrors.surname = 'Il cognome è obbligatorio';
+         newErrors.surname = t('contact.validation.surnameRequired');
       }
 
       const email = formData.get('email')?.trim();
       if (!email) {
-         newErrors.email = "L'email è obbligatoria";
+         newErrors.email = t('contact.validation.emailRequired');
       } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-         newErrors.email = "L'email non è valida";
+         newErrors.email = t('contact.validation.emailInvalid');
       }
 
       if (!formData.get('message')?.trim()) {
-         newErrors.message = 'Il messaggio è obbligatorio';
+         newErrors.message = t('contact.validation.messageRequired');
       }
 
       return newErrors;
@@ -55,7 +57,7 @@ export default function ContactForm() {
          return;
       }
 
-      setResult("Invio in corso...");
+      setResult(t('contact.sending'));
       formData.append("access_key", "3ed96716-a9c5-48ec-bfc8-e751a616231f");
 
       const response = await fetch("https://api.web3forms.com/submit", {
@@ -65,10 +67,10 @@ export default function ContactForm() {
 
       const data = await response.json();
       if (data.success) {
-         setResult("Messaggio inviato con successo");
+         setResult(t('contact.success'));
          event.target.reset();
       } else {
-         setResult("Errore nell'invio del messaggio");
+         setResult(t('contact.error'));
       }
    };
 
@@ -80,11 +82,11 @@ export default function ContactForm() {
             {/* Contact Info */}
             <div className="mb-4 w-full flex justify-between">
                <h2 className="text-accent-content text-3xl">
-                  Contattami
+                  {t('contact.title')}
                </h2>
 
                <div className="flex items-end">
-                  <p className='pb-[1px] pe-1'>Email: </p>
+                  <p className='pb-[1px] pe-1'>{t('contact.emailLabel')}</p>
                   <button
                      type="button"
                      className="cursor-pointer me-1 pb-[1px]"
@@ -116,7 +118,7 @@ export default function ContactForm() {
                <div className="flex gap-4">
                   <div className="w-1/2">
                      <label htmlFor="name" className="text-base-content block">
-                        <small>Nome</small>
+                        <small>{t('contact.name')}</small>
                      </label>
                      <input
                         id="name"
@@ -130,7 +132,7 @@ export default function ContactForm() {
                   </div>
                   <div className="w-1/2">
                      <label htmlFor="surname" className="text-base-content block">
-                        <small>Cognome</small>
+                        <small>{t('contact.surname')}</small>
                      </label>
                      <input
                         id="surname"
@@ -146,7 +148,7 @@ export default function ContactForm() {
 
                <div>
                   <label htmlFor="email" className="text-base-content block">
-                     <small>Email</small>
+                     <small>{t('contact.email')}</small>
                   </label>
                   <input
                      id="email"
@@ -161,7 +163,7 @@ export default function ContactForm() {
 
                <div>
                   <label htmlFor="message" className="text-base-content block">
-                     <small>Il tuo messaggio</small>
+                     <small>{t('contact.message')}</small>
                   </label>
                   <textarea
                      id="message"
@@ -175,13 +177,13 @@ export default function ContactForm() {
                </div>
                <div className="flex justify-between items-center">
                   {result && (
-                     <span className={`block mt-2 ${result === "Messaggio inviato con successo" ? 'text-green-600' : result === "Invio in corso..." ? 'text-base-content' : 'text-red-500'}`}>
+                     <span className={`block mt-2 ${result === t('contact.success') ? 'text-green-600' : result === t('contact.sending') ? 'text-base-content' : 'text-red-500'}`}>
                         {result}
                      </span>
                   )}
                   <div />
                   <button type="submit" className="btn-main z-10">
-                     <p className='z-20 relative'>Invia</p>
+                     <p className='z-20 relative'>{t('contact.submit')}</p>
                   </button>
                </div>
             </form>

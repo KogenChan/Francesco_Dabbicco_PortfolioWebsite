@@ -1,4 +1,5 @@
 import { Link, useParams } from 'react-router';
+import { useTranslation } from 'react-i18next';
 import useMediaItem from '../hooks/useMediaItem.min.js';
 import RichText from '../components/RichText.jsx';
 import routes from "../routing/routes.min";
@@ -6,11 +7,12 @@ import routes from "../routing/routes.min";
 export default function WorkDetail() {
    const { itemName } = useParams();
    const { media, loading, error } = useMediaItem(itemName);
+   const { t } = useTranslation();
 
    if (error) {
       return (
          <div className="flex justify-center items-center h-screen">
-            <div>Error loading image</div>
+            <div>{t("works.errorLoading")}</div>
          </div>
       );
    };
@@ -22,7 +24,7 @@ export default function WorkDetail() {
    if (!media) {
       return (
          <div className="flex justify-center items-center h-screen">
-            <div>Work not found</div>
+            <div>{t("works.notFound")}</div>
          </div>
       );
    };
@@ -69,7 +71,7 @@ export default function WorkDetail() {
          <div className="container m-auto flex justify-center pb-10">
             <Link to={routes.works} onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
                <button type="submit" className="btn-main z-10">
-                  <p className='z-20 relative'>Torna alla galleria</p>
+                  <p className='z-20 relative'>{t("works.backToGallery")}</p>
                </button>
             </Link>
          </div>

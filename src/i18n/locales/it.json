@@ -1,0 +1,51 @@
+{
+  "nav": {
+    "home": "Home",
+    "works": "Opere",
+    "installations": "Installazioni",
+    "about": "About",
+    "contact": "Contatti"
+  },
+  "about": {
+    "statement": "Artist's Statement",
+    "bio": "Francesco Dabbicco",
+    "exhibits": "Mostre",
+    "publications": "Premi/Pubblicazioni",
+    "illustrations": "Illustrazioni per libri"
+  },
+  "home": {
+    "recentWorks": "Opere recenti"
+  },
+  "works": {
+    "backToGallery": "Torna alla galleria",
+    "notFound": "Opera non trovata",
+    "errorLoading": "Errore nel caricamento"
+  },
+  "installations": {
+    "notFound": "Installazione non trovata",
+    "errorLoading": "Errore nel caricamento"
+  },
+  "contact": {
+    "title": "Contattami",
+    "emailLabel": "Email: ",
+    "name": "Nome",
+    "surname": "Cognome",
+    "email": "Email",
+    "message": "Il tuo messaggio",
+    "submit": "Invia",
+    "sending": "Invio in corso...",
+    "success": "Messaggio inviato con successo",
+    "error": "Errore nell'invio del messaggio",
+    "validation": {
+      "nameRequired": "Il nome è obbligatorio",
+      "surnameRequired": "Il cognome è obbligatorio",
+      "emailRequired": "L'email è obbligatoria",
+      "emailInvalid": "L'email non è valida",
+      "messageRequired": "Il messaggio è obbligatorio"
+    }
+  },
+  "common": {
+    "errorLoading": "Errore nel caricamento",
+    "backToTop": "Torna in alto"
+  }
+}

@@ -1,15 +1,17 @@
 import { useParams } from 'react-router';
+import { useTranslation } from 'react-i18next';
 import useMediaItem from '../hooks/useMediaItem.min.js';
 import RichText from '../components/RichText.jsx';
 
 export default function InstallationDetail() {
    const { itemName } = useParams();
    const { media, error } = useMediaItem(itemName);
+   const { t } = useTranslation();
 
    if (error) {
       return (
          <div className="flex justify-center my-20">
-            <div>Error loading image</div>
+            <div>{t("installations.errorLoading")}</div>
          </div>
       );
    }
@@ -17,7 +19,7 @@ export default function InstallationDetail() {
    if (!media) {
       return (
          <div className="flex justify-center my-20">
-            <div>Installation not found</div>
+            <div>{t("installations.notFound")}</div>
          </div>
       );
    }

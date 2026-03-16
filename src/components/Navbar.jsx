@@ -1,10 +1,13 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router";
+import { useTranslation } from "react-i18next";
 import routes from "../routing/routes.min";
+import { LocaleSwitcher } from "./LocaleSwitcher";
 
 export default function Navbar() {
    const [isOpen, setIsOpen] = useState(false);
    const location = useLocation();
+   const { t } = useTranslation();
 
    const isActive = (path) => {
       if (path === routes.home) {
@@ -37,15 +40,16 @@ export default function Navbar() {
                      />
                   </Link>
                   <div className="hidden md:flex items-center gap-4">
-                     <Link to={routes.home} className="text-sm font-semibold hover:text-secondary-content transition-colors duration-100">Home</Link>
-                     <Link to={routes.works} className="text-sm font-semibold hover:text-accent-content transition-colors duration-100">Opere</Link>
-                     <Link to={routes.installations} className="text-sm font-semibold hover:text-accent-content transition-colors duration-100">Installazioni</Link>
+                     <Link to={routes.home} className="text-sm font-semibold hover:text-secondary-content transition-colors duration-100">{t("nav.home")}</Link>
+                     <Link to={routes.works} className="text-sm font-semibold hover:text-accent-content transition-colors duration-100">{t("nav.works")}</Link>
+                     <Link to={routes.installations} className="text-sm font-semibold hover:text-accent-content transition-colors duration-100">{t("nav.installations")}</Link>
                   </div>
                </div>
 
                <div className="hidden md:flex items-center gap-4">
-                  <Link to={routes.about} className="text-sm font-semibold hover:text-secondary-content transition-colors duration-100">About</Link>
-                  <Link to={routes.contact} className="text-sm font-semibold hover:text-accent-content transition-colors duration-100">Contatti</Link>
+                  <Link to={routes.about} className="text-sm font-semibold hover:text-secondary-content transition-colors duration-100">{t("nav.about")}</Link>
+                  <Link to={routes.contact} className="text-sm font-semibold hover:text-accent-content transition-colors duration-100">{t("nav.contact")}</Link>
+                  <LocaleSwitcher />
                </div>
 
                {/* Hamburger Button */}
@@ -71,35 +75,35 @@ export default function Navbar() {
                   className={`font-semibold hover:text-secondary-content transition-colors duration-100 px-4 py-3 ${isActive(routes.home) ? 'bg-accent-content font-light text-white' : ''}`}
                   onClick={() => setIsOpen(false)}
                >
-                  Home
+                  {t("nav.home")}
                </Link>
                <Link
                   to={routes.works}
                   className={`font-semibold hover:text-accent-content transition-colors duration-100 px-4 py-3 ${isActive(routes.works) ? 'bg-accent-content font-light text-white' : ''}`}
                   onClick={() => setIsOpen(false)}
                >
-                  Opere
+                  {t("nav.works")}
                </Link>
                <Link
                   to={routes.installations}
                   className={`font-semibold hover:text-accent-content transition-colors duration-100 px-4 py-3 ${isActive(routes.installations) ? 'bg-accent-content font-light text-white' : ''}`}
                   onClick={() => setIsOpen(false)}
                >
-                  Installazioni
+                  {t("nav.installations")}
                </Link>
                <Link
                   to={routes.about}
                   className={`font-semibold hover:text-secondary-content transition-colors duration-100 px-4 py-3 ${isActive(routes.about) ? 'bg-accent-content font-light text-white' : ''}`}
                   onClick={() => setIsOpen(false)}
                >
-                  About
+                  {t("nav.about")}
                </Link>
                <Link
                   to={routes.contact}
                   className={`font-semibold hover:text-accent-content transition-colors duration-100 px-4 py-3 ${isActive(routes.contact) ? 'bg-accent-content font-light text-white' : ''}`}
                   onClick={() => setIsOpen(false)}
                >
-                  Contatti
+                  {t("nav.contact")}
                </Link>
             </div>
          </div>

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useGlobalLoading } from "../context/LoadingContext";
+import { useLocale } from "../context/LocaleContext";
 
 export default function useFetchData(url, options = {}) {
    const { manageLoading = true } = options;
@@ -7,9 +8,9 @@ export default function useFetchData(url, options = {}) {
    const [loading, setLoading] = useState(true);
    const [error, setError] = useState(null);
    const { startLoading, stopLoading } = useGlobalLoading();
+   const { locale } = useLocale();
 
    useEffect(() => {
-      // Don't fetch if url is null/undefined
       if (!url) {
          setLoading(false);
          return;
@@ -24,7 +25,8 @@ export default function useFetchData(url, options = {}) {
          if (manageLoading) startLoading();
 
          try {
-            const response = await fetch(url);
+            const localeUrl = `${url}${url.includes("?") ? "&" : "?"}locale=${locale}`;
+            const response = await fetch(localeUrl);
             if (!response.ok) throw new Error(`Failed to fetch: ${response.status}`);
             const json = await response.json();
             if (active) setData(json);
@@ -39,7 +41,7 @@ export default function useFetchData(url, options = {}) {
       fetchData();
 
       return () => { active = false; };
-   }, [url, manageLoading, startLoading, stopLoading]);
+   }, [url, manageLoading, startLoading, stopLoading, locale]); // 👈 locale added
 
    return { data, loading, error };
 }

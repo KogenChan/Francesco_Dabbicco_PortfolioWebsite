@@ -1,0 +1,51 @@
+{
+  "nav": {
+    "home": "Home",
+    "works": "Works",
+    "installations": "Installations",
+    "about": "About",
+    "contact": "Contacts"
+  },
+  "about": {
+    "statement": "Artist's Statement",
+    "bio": "Francesco Dabbicco",
+    "exhibits": "Exhibits",
+    "publications": "Awards/Publications",
+    "illustrations": "Illustrations"
+  },
+  "home": {
+    "recentWorks": "Recent Works"
+  },
+  "works": {
+    "backToGallery": "Back to gallery",
+    "notFound": "Work not found",
+    "errorLoading": "Error loading content"
+  },
+  "installations": {
+    "notFound": "Installation not found",
+    "errorLoading": "Error loading content"
+  },
+  "contact": {
+    "title": "Contact me",
+    "emailLabel": "Email: ",
+    "name": "First name",
+    "surname": "Last name",
+    "email": "Email",
+    "message": "Your message",
+    "submit": "Send",
+    "sending": "Sending...",
+    "success": "Message sent successfully",
+    "error": "Error sending message",
+    "validation": {
+      "nameRequired": "First name is required",
+      "surnameRequired": "Last name is required",
+      "emailRequired": "Email is required",
+      "emailInvalid": "Email is not valid",
+      "messageRequired": "Message is required"
+    }
+  },
+  "common": {
+    "errorLoading": "Error loading content",
+    "backToTop": "Back to top"
+  }
+}

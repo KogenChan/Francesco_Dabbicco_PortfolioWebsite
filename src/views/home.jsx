@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import Carousel from "../components/Carousel";
 import ProjectSection from "../components/ProjectSection.jsx";
 import useFetchData from "../hooks/useFetchData.min.js";
@@ -10,6 +11,7 @@ import routes from "../routing/routes.min";
 export default function Home() {
    const PAYLOAD_API = import.meta.env.VITE_PAYLOAD_API_URL;
    const [loadSecondary, setLoadSecondary] = useState(false);
+   const { t } = useTranslation();
 
    const { data: heroData, error: heroError } = useFetchData(
       `${PAYLOAD_API}/api/homepage-hero?limit=1&depth=1`
@@ -86,7 +88,7 @@ export default function Home() {
          {loadSecondary && (
             <>
                <section className="container mx-auto pb-8 lg:pb-14 overflow-x-hidden">
-                  <h2 className="text-4xl pb-6 pt-4">Opere recenti</h2>
+                  <h2 className="text-4xl pb-6 pt-4">{t("home.recentWorks")}</h2>
                   {carouselLoading ? (
                      <div className="h-64 bg-base-200 animate-pulse rounded-lg" />
                   ) : transformedCarouselItems.length > 0 ? (

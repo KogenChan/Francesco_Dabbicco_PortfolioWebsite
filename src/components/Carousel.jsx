@@ -18,7 +18,6 @@ export default function Carousel({ items }) {
    };
 
    const handleZoomedImageClick = useCallback((item) => {
-      // Check for mainWorkSlug first, then regular slug
       const targetSlug = item.mainWorkSlug || item.slug;
 
       if (targetSlug) {

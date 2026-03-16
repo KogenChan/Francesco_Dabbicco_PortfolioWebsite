@@ -1,8 +1,10 @@
+import { useTranslation } from "react-i18next";
 import useFetchData from "../hooks/useFetchData.min.js";
 import RichText from "../components/RichText.jsx";
 
 export default function About() {
    const PAYLOAD_API = import.meta.env.VITE_PAYLOAD_API_URL;
+   const { t } = useTranslation();
 
    const { data: aboutData, error } = useFetchData(
       `${PAYLOAD_API}/api/about?limit=1`
@@ -10,7 +12,7 @@ export default function About() {
 
    const about = aboutData?.docs?.[0];
 
-   if (error) return <p className="text-red-500">Error: {error}</p>;
+   if (error) return <p className="text-red-500">{t("common.errorLoading")}: {error}</p>;
 
    return (
       <>
@@ -19,7 +21,7 @@ export default function About() {
             <section className="container mx-auto pt-18 pb-16 lg:pb-24 lg:pt-30">
                <div className="mx-auto">
                   <div className="inline">
-                     <h3 className="pb-3 text-lg">Artist's Statement</h3>
+                     <h3 className="pb-3 text-lg">{t("about.statement")}</h3>
                      <RichText content={about.statement} className="text-sm"/>
                   </div>
                </div>
@@ -32,15 +34,15 @@ export default function About() {
                <div className="h-full columns-1 md:columns-2 lg:columns-3 xl:columns-4 gap-8 lg:gap-12 md:text-sm">
                   {about?.bio && (
                      <div className="inline">
-                        <h3 className="pb-3 text-base">Francesco Dabbicco</h3>
+                        <h3 className="pb-3 text-base">{t("about.bio")}</h3>
                         <RichText content={about.bio} className="text-xs"/>
                      </div>
                   )}
-                  
+
                   {about?.exhibits && (
                      <div className="inline">
                         <br />
-                        <h3 className="pb-3 text-base">Mostre</h3>
+                        <h3 className="pb-3 text-base">{t("about.exhibits")}</h3>
                         <RichText content={about.exhibits} className="text-xs"/>
                      </div>
                   )}
@@ -48,7 +50,7 @@ export default function About() {
                   {about?.publications && (
                      <div className="inline">
                         <br />
-                        <h3 className="pb-3 text-base">Premi/Pubblicazioni</h3>
+                        <h3 className="pb-3 text-base">{t("about.publications")}</h3>
                         <RichText content={about.publications} className="text-xs"/>
                      </div>
                   )}
@@ -56,7 +58,7 @@ export default function About() {
                   {about?.illustrations && (
                      <div className="inline">
                         <br />
-                        <h3 className="pb-3 text-base">Illustrazioni per libri</h3>
+                        <h3 className="pb-3 text-base">{t("about.illustrations")}</h3>
                         <RichText content={about.illustrations} className="text-xs"/>
                      </div>
                   )}

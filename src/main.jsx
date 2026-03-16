@@ -1,10 +1,12 @@
 import { createRoot } from 'react-dom/client'
 import App from './App.jsx'
-import { SpeedInsights } from "@vercel/speed-insights/react"
+import { LocaleProvider } from './context/LocaleContext.jsx';
+import "./i18n/index.js";
 
 createRoot(document.getElementById('root')).render(
-  <>
-    <App />
-    <SpeedInsights />
-  </>
+   <>
+      <LocaleProvider>
+         <App />
+      </LocaleProvider>
+   </>
 );
