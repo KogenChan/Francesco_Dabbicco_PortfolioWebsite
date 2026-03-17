@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { useLocale } from "../context/LocaleContext";
+import { PiGlobeHemisphereWestLight } from "react-icons/pi";
 
 const LOCALES = [
    { code: "it", label: "Italiano", flag: "https://flagcdn.com/w40/it.png" },
@@ -25,18 +26,18 @@ export const LocaleSwitcher = () => {
 
    return (
       <div ref={ref} className="relative">
-         {/* Trigger — flag only */}
+         {/* Trigger */}
          <button
             onClick={() => setOpen((prev) => !prev)}
             className="flex items-center gap-1.5 hover:opacity-70 transition-opacity duration-100 -me-1 cursor-pointer"
          >
-            <img src={current.flag} alt={current.label} className="w-[30px] h-[18px] object-cover" />
-            <span className={`text-xs transition-transform duration-200 ${open ? "rotate-180" : ""}`}>▾</span>
+            <PiGlobeHemisphereWestLight className="text-3xl" />
+            <span className={`text-xs hidden md:block transition-transform duration-300 ${open ? "rotate-180" : ""}`}>▾</span>
          </button>
 
          {/* Dropdown */}
-         {open && (
-            <ul className="absolute right-0 mt-4 w-40 bg-white border-2 border-accent shadow-md z-50 overflow-hidden">
+         <div className={`absolute right-0 mt-4 w-40 bg-white z-50 overflow-hidden  transition-all duration-300 ${open ? "max-h-23 border-t border-base-content navShadow" : "max-h-0"}`}>
+            <ul>
                {LOCALES.map((l) => (
                   <li
                      key={l.code}
@@ -45,15 +46,15 @@ export const LocaleSwitcher = () => {
                         setOpen(false);
                      }}
                      className={`flex items-center gap-3 px-4 py-3 text-sm font-semibold cursor-pointer hover:text-secondary-content transition-colors duration-100
-                ${l.code === locale ? "bg-accent-content/10 text-accent-content" : ""}`}
+                        ${l.code === locale ? "bg-accent-content font-light text-white" : ""}`}
                   >
-                     <img src={l.flag} alt={l.label} className="w-5 h-3.5 object-cover" />
+                     <img src={l.flag} alt={l.label} className={`w-7 h-5 object-cover ${l.code === locale ? "shadow-xs shadow-black/50" : ""}`} />
                      <span className="flex-1">{l.label}</span>
-                     {l.code === locale && <span className="text-accent-content">✓</span>}
+                     {l.code === locale && <span className="text-white">✓</span>}
                   </li>
                ))}
             </ul>
-         )}
+         </div>
       </div>
    );
 };

@@ -52,18 +52,23 @@ export default function Navbar() {
                   <LocaleSwitcher />
                </div>
 
-               {/* Hamburger Button */}
-               <button
-                  onClick={() => setIsOpen(!isOpen)}
-                  className="md:hidden p-0 pt-0.5 focus:outline-none"
-                  aria-label="Toggle menu"
-               >
-                  <div className="w-6 h-6 relative flex items-center justify-center">
-                     <span className={`absolute h-0.5 bg-base-content transition-all duration-300 origin-center ${isOpen ? 'rotate-45 w-full' : '-translate-y-2.5 w-6'}`}></span>
-                     <span className={`absolute h-0.5 w-6 bg-base-content transition-all duration-300 ${isOpen ? 'scale-x-0' : 'scale-x-100'}`}></span>
-                     <span className={`absolute h-0.5 bg-base-content transition-all duration-300 origin-center ${isOpen ? '-rotate-45 w-full' : 'translate-y-2.5 w-6'}`}></span>
-                  </div>
-               </button>
+               <div className="md:hidden flex items-center pt-0.5">
+                  <LocaleSwitcher />
+                  {/* Hamburger Button */}
+                  <button
+                     onClick={() => setIsOpen(!isOpen)}
+                     className="md:hidden ps-4 p-0 focus:outline-none"
+                     aria-label="Toggle menu"
+                  >
+                     <div className="w-6 h-6 relative flex items-center justify-center">
+                        <span className={`absolute h-0.5 bg-base-content transition-all duration-300 origin-center ${isOpen ? 'rotate-45 w-full' : '-translate-y-2.5 w-6'}`}></span>
+                        <span className={`absolute h-0.5 w-6 bg-base-content transition-all duration-300 ${isOpen ? 'scale-x-0' : 'scale-x-100'}`}></span>
+                        <span className={`absolute h-0.5 bg-base-content transition-all duration-300 origin-center ${isOpen ? '-rotate-45 w-full' : 'translate-y-2.5 w-6'}`}></span>
+                     </div>
+                  </button>
+               </div>
+
+
             </div>
          </div>
 
