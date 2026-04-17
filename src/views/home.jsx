@@ -23,8 +23,6 @@ export default function Home() {
    const projectSlug = loadSecondary ? 'homepage' : null;
    const { project, error: projectError, loading: projectLoading } = useProjectSection(projectSlug);
 
-   project && console.log(project.mainProject.destination)
-
    useEffect(() => {
       if (heroData?.docs?.[0]) {
          setLoadSecondary(true);
@@ -32,17 +30,22 @@ export default function Home() {
    }, [heroData]);
 
    useEffect(() => {
-      const link = document.createElement('link');
-      link.rel = 'preload';
-      link.as = 'image';
-      link.href = 'https://r2images.narunaga.workers.dev/cover-1.webp';
-      link.fetchPriority = 'high';
-      document.head.appendChild(link);
+      if (heroData?.docs?.[0]) {
+         setLoadSecondary(true);
 
-      return () => {
-         document.head.removeChild(link);
-      };
-   }, []);
+         const heroImageUrl = heroData.docs[0].image?.url ?? heroData.docs[0].image;
+         if (heroImageUrl) {
+            const link = document.createElement('link');
+            link.rel = 'preload';
+            link.as = 'image';
+            link.href = heroImageUrl;
+            link.fetchPriority = 'high';
+            document.head.appendChild(link);
+
+            return () => document.head.removeChild(link);
+         }
+      }
+   }, [heroData]);
 
    const hero = heroData?.docs?.[0];
    const carouselItems = carouselData?.docs || [];
