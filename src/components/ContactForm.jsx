@@ -86,28 +86,28 @@ export default function ContactForm() {
                </h2>
 
                <div className="flex items-end">
-                  <p className='pb-[1px] pe-1'>{t('contact.emailLabel')}</p>
+                  <p className='pb-px pe-2'>{t('contact.emailLabel')}</p>
                   <button
                      type="button"
-                     className="cursor-pointer me-1 pb-[1px]"
+                     className="cursor-pointer me-1 pb-px"
                      onClick={() => {
                         navigator.clipboard.writeText('francescodabbicco.art@gmail.com');
                         alert('Email copied to clipboard!');
                      }}
                   >
                      {MdOutlineAlternateEmail && (
-                        <MdOutlineAlternateEmail className="text-2xl pt-1 text-base-content hover:text-accent transition-colors duration-100" />
+                        <MdOutlineAlternateEmail className="text-2xl text-base-content hover:text-accent transition-colors duration-100" />
                      )}
                   </button>
-                  <p className="text-2xl font-sans text-accent -mb-[1px] px-1">|</p>
+                  <p className="text-2xl font-sans text-accent -mb-px px-1">|</p>
                   <a
-                     className="text-base-content m-0 mx-1.5 pb-[1px]"
+                     className="text-base-content m-0 mx-1.5 pb-px"
                      target="_blank"
                      href="https://www.instagram.com/francescodabbiccoart/"
                      rel="noopener noreferrer"
                   >
                      {FaInstagram && (
-                        <FaInstagram className="text-2xl pt-1 text-base-content hover:text-accent transition-colors duration-100" />
+                        <FaInstagram className="text-2xl text-base-content hover:text-accent transition-colors duration-100" />
                      )}
                   </a>
                </div>

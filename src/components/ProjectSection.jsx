@@ -55,9 +55,9 @@ export default function ProjectSection({
                } ${className}`}>
 
                {/* # Title for mobile */}
-               <div className="lg:hidden pt-10 pb-6">
-                  <h2 className="text-4xl">{project.title}</h2>
-                  {project.subtitle && <p className="text-xl text-gray-600 mt-2">{project.subtitle}</p>}
+               <div className="lg:hidden pt-8 pb-3">
+                  <h2 className="text-4xl -ms-px">{project.title}</h2>
+                  {project.subtitle && <p className="text-xl text-gray-600">{project.subtitle}</p>}
                </div>
 
                {/* # Image */}
@@ -67,13 +67,13 @@ export default function ProjectSection({
                </figure>
 
                {/* # Text content */}
-               <div className={`flex flex-col justify-end lg:justify-center px-0 pt-6 lg:pt-0 pb-10 lg:pb-8 ${reverse ? 'lg:order-1' : 'lg:order-2'
+               <div className={`flex flex-col justify-end lg:justify-center px-0 pt-4 lg:pt-0 pb-0 lg:pb-6 ${reverse ? 'lg:order-1' : 'lg:order-2'
                   } ${textClassName}`}>
-                  <div className="hidden lg:block pb-6">
-                     <h1 className="text-4xl">{project.title}</h1>
-                     {project.subtitle && <p className="text-xl text-gray-600 mt-2">{project.subtitle}</p>}
+                  <div className="hidden lg:block pb-4">
+                     <h1 className="text-4xl -ms-0.5">{project.title}</h1>
+                     {project.subtitle && <p className="text-xl text-gray-600 mt-1">{project.subtitle}</p>}
                   </div>
-                  <div className='text-base lg:text-lg'>
+                  <div className='text-base lg:text-lg leading-6 lg:leading-6.5'>
                      <RichText content={project.description} />
                   </div>
                </div>

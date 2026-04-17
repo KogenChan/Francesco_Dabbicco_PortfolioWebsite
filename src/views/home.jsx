@@ -79,8 +79,8 @@ export default function Home() {
                   </figure>
 
                   <div className="lg:order-1 flex flex-col justify-end lg:justify-center px-0 pt-6 lg:pt-0 pb-10 lg:pb-6">
-                     <h1 className="text-4xl pb-5 lg:pb-6">{hero.title}</h1>
-                     <div className="text-base lg:text-lg">
+                     <h1 className="text-4xl pb-4 lg:pb-6">{hero.title}</h1>
+                     <div className="text-base lg:text-lg leading-6 lg:leading-6.5">
                         <RichText content={hero.text} />
                      </div>
                   </div>
@@ -91,7 +91,7 @@ export default function Home() {
          {loadSecondary && (
             <>
                <section className="container mx-auto pb-8 lg:pb-14 overflow-x-hidden">
-                  <h2 className="text-4xl pb-6 pt-4">{t("home.recentWorks")}</h2>
+                  <h2 className="text-4xl pb-4 pt-4">{t("home.recentWorks")}</h2>
                   {carouselLoading ? (
                      <div className="h-64 bg-base-200 animate-pulse rounded-lg" />
                   ) : transformedCarouselItems.length > 0 ? (

@@ -36,7 +36,7 @@ export const LocaleSwitcher = () => {
          </button>
 
          {/* Dropdown */}
-         <div className={`absolute right-0 mt-4 w-40 bg-white z-50 overflow-hidden  transition-all duration-300 ${open ? "max-h-23 border-t border-base-content navShadow" : "max-h-0"}`}>
+         <div className={`absolute right-0 mt-[17px] w-40 bg-white z-50 overflow-hidden  transition-all duration-300 ${open ? "max-h-23 navShadow" : "max-h-0"}`}>
             <ul>
                {LOCALES.map((l) => (
                   <li
